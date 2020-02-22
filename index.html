@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-   <link rel="stylesheet" type="text/css" media="screen" href="style.css" /> 
-   <meta charset="UTF-8"> 
-    <!-- 
+   <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" />-->
+   <meta charset="UTF-8">
+    <!--
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
    -->
@@ -12,10 +12,10 @@
 
    <!-- Include the Quill library -->
    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-   
-      <!--  
+
+      <!--
    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
-   
+
    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -28,39 +28,23 @@
    <!-- Theme included stylesheets -->
    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
-   
+
 
    </head>
   <body>
 
     <h1>Hello Joshua!</h1>
-    
+
     <div id="toolbar"></div>
     <div id="editor"></div>
-    
-    <script>
-      var toolbarOptions = ['bold', 'italic', 'underline', 'strike'];
-
-      var container = document.getElementById('editor');
-      var quill = new Quill(container, {
-        modules: {
-          toolbar: toolbarOptions
-        },
-        theme: 'snow'
-      });
-    </script>
+    <!-- call from other script-->
+    <script src="./QuillTool.js"></script>
 
     <p></p>
     <p></p>
-    <label>Text Area</label>
     <p></p>
- 
-    <!-- Converted HTML Textbox  -->
-    <textarea id="htmlTextBox", rows = "3", cols = "80"> Your text here </textarea>
-    <p></p>
- 
     <!-- Convert To HTML Button  -->
-    <button id="ConvertToHtmlButton">Convert To Html</button>
+    <button id="KeepInArray">Enter</button>
 
     <!--
     <script>
@@ -77,22 +61,23 @@
 
         var quillHtml = String(quill.root.innerHTML);
         console.log( quillHtml );
-        
+
         document.getElementById("htmlTextBox").textContent = quillHtml;
     }
     </script>
     -->
 
      <!-- Convert To PDF Button  -->
+     <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
      <button id="ConvertToPdfButton">Convert To PDF</button>
 
      <!--
-    <script> 
+    <script>
       function convertToPdf() {
         var htmlData = String(document.getElementById("htmlTextBox").textContent);
         console.log(htmlData)
         //adds html Data to json array object
-        var htmlDataJson = 
+        var htmlDataJson =
           {
             "htmlDataArray":[htmlData]
           };
@@ -102,18 +87,18 @@
         /*
           function httpGetAsync(theUrl, callback) {
               var xmlHttp = new XMLHttpRequest();
-              xmlHttp.onreadystatechange = function() { 
+              xmlHttp.onreadystatechange = function() {
                   if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
                       callback(xmlHttp.responseText);
               }
-              xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+              xmlHttp.open("GET", theUrl, true); // true for asynchronous
               xmlHttp.send(null);
           }
         */
       }
 
     </script>
-     
+
     -->
 
 
@@ -122,13 +107,13 @@
     <!--
     <script type="text/javascript">
       const target = document.querySelector('div.target');
-      
+
       target.addEventListener('paste', (event) => {
         var clipboardData = event.clipboardData || window.clipboardData;
         let text = clipboardData.getData('text/plain');
         let htmlText = clipboardData.getData('text/html');
         console.log(text);
-        
+
         const selection = window.getSelection();
         if (!selection.rangeCount) return false;
         selection.deleteFromDocument();
@@ -139,7 +124,7 @@
 
     </script>
     <!-- Load the JavaScript script for the client application-->
-    <script src="C:/Users/joshmoran05/Documents/Joshua Moran/PLU/4-Senior Year/Fall/CS499-A/Electron Practice/electron-quick-start/index.js"> </script>
+    <!--<script src="C:/Users/joshmoran05/Documents/Joshua Moran/PLU/4-Senior Year/Fall/CS499-A/Electron Practice/electron-quick-start/index.js"> </script>-->
   </body>
-  
+
   </html>
