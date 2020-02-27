@@ -17,12 +17,6 @@ var main = function() {
   let ConvertToPdfButton = document.getElementById("ConvertToPdfButton");
   ConvertToPdfButton.addEventListener("click", convertToPdf);
 
-  document.addEventListener("click",function(){
-    var promise = navigator.clipboard.read();
-    console.log(promise);
-  });
-
-
 
 
 };
