@@ -8,7 +8,8 @@ let mainWindow;
 
 // Listen for app to be ready
 app.on('ready', function (){
-    // Create new window 
+    // Create new window
+
     mainWindow = new BrowserWindow({});
 
     // Load html into window

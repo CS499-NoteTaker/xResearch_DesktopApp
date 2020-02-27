@@ -4,6 +4,7 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+//IF NO INTERNET CONNECTION, THIS APP WILL NOT WORK, HANDLE THAT.
 arr = {
   "ht":[]
 }
@@ -16,12 +17,18 @@ var main = function() {
   let ConvertToPdfButton = document.getElementById("ConvertToPdfButton");
   ConvertToPdfButton.addEventListener("click", convertToPdf);
 
-  document.addEventListener('copy',addLink);
+  document.addEventListener("click",function(){
+    var promise = navigator.clipboard.read();
+    console.log(promise);
+  });
+
+
+
 
 };
 
 function addLink() {
-  console.log("gets called"); 
+  console.log("gets called");
         //Get the selected text and append the extra info
         var selection = window.getSelection(),
             pagelink = '<br /><br /> Read more at: ' + document.location.href,
