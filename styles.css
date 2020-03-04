@@ -1,0 +1,22 @@
+ul.tools {
+    display: none;
+
+    list-style: none;
+    box-shadow: 0px 0px 4px rgba(0,0,0,.5);
+    border: solid 0.5px #000;
+    position: absolute;
+    background: #fff;
+    padding: 0;
+}
+ul.tools li {
+    height: 20px;
+    font-size: 12px;
+    margin: 5px;
+    padding: 2px 0px 0px 0px;
+    cursor: pointer;
+}
+#loading-indicator {
+  position: absolute;
+  left: 200px;
+  top: 200px;
+}

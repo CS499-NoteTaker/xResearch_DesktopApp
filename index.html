@@ -3,6 +3,7 @@
   <head>
    <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" />-->
    <meta charset="UTF-8">
+   <link rel="stylesheet" href="styles.css">
     <!--
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
@@ -14,6 +15,9 @@
    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
    <script src = "./jquery-3.4.1.min.js"></script>
 
+   <!-- This is the script for deepai text summarization-->?
+   <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
+
       <!--
    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
@@ -22,7 +26,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         -->
 
-
+<!-- add A SCROLL bar-->
    <!-- Include stylesheet -->
    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
@@ -38,13 +42,36 @@
 
     <div id="toolbar"></div>
     <div id="editor"></div>
+
+    <img src="loading.gif" id="loading-indicator" style="display:none" />
     <!-- call from other script-->
     <script src="./QuillTool.js"></script>
+    <ul class="tools">
+    <li onclick = "summarizeWords2();">Summarize </li>
+</ul>
 
     <p></p>
     <p></p>
     <p></p>
+    Summarize: <select id="percentlength">
+    <option value="20" selected>20%</option>
+    <option value="25" selected>25%</option>
+    <option value="30" selected>30%</option>
+    <option value="35" selected>35%</option>
+    <option value="40" selected>40%</option>
+    <option value="45" selected>45%</option>
+    <option value="50" selected>50%</option>
+    <option value="55" selected>55% </option>
+    <option value="60" selected>60%</option>
+    <option value="65" selected>65%</option>
+    <option value="70" selected>70%</option>
+    <option value="75" selected>75%</option>
+    <option value="80" selected>80%</option>
+
+</select>
     <!-- Convert To HTML Button  -->
+    <p></p>
+    <button id="Summarize">Summarize</button>
     <button id="KeepInArray">Enter</button>
 
     <!--
@@ -71,6 +98,7 @@
      <!-- Convert To PDF Button  -->
      <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
      <button id="ConvertToPdfButton">Convert To PDF</button>
+     <div id = "add"></div>
 
      <!--
     <script>
