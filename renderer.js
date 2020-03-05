@@ -125,6 +125,8 @@ var summarizeWords2 = function(){
   }
   else if(this.readyState == 4 && this.status != 200){
     $('#loading-indicator').hide();
+    quill.enable(true);
+    quill.focus();
     document.getElementById("add").innerHTML = "Request failed!";
   }
 
