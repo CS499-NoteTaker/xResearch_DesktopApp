@@ -132,6 +132,7 @@ var summarizeWords2 = function(){
 
 }
 xhttp.open("POST", "http://eazymind.herokuapp.com/arabic_sum/eazysum", true);
+xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate");
 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhttp.send(data);
 quill.enable(false);      //set quill to be uneditable
