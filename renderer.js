@@ -55,6 +55,7 @@ var main = function() {
     let ConvertToPdfButton = document.getElementById("ConvertToPdfButton");
     ConvertToPdfButton.addEventListener("click", convertToPdf);
 
+
     //prevent deselecting texts
 
 
@@ -178,7 +179,7 @@ var convertToHtml = function(e) {
 function display_array() {
     var e = "";
     for (var i = 0; i < arr.ht.length; i++) {
-        e += "<li/><a/>" + i + " = " + arr.ht[i].substring(0, 10) + "<br/>";
+        e += "<li id=" + i + "/><a/>" + i + " = " + arr.ht[i].substring(0, 10) + "<br/>";
     }
     console.log(e);
     document.getElementById("myUL").innerHTML = e;
@@ -194,7 +195,12 @@ var convertToPdf = function(e) {
     if (arr.ht.length === 0) {
         arr.ht.push("");
     }
+
+    // Flushes researched cells and empties array
     var htmlData = JSON.stringify(arr);
+    arr.ht = [];
+    display_array();
+
     console.log(htmlData)
         //adds html Data to json array object
         //using xhr
@@ -230,7 +236,6 @@ var convertToPdf = function(e) {
     xhr.responseType = 'blob';
 
     xhr.send(htmlData);
-    arr.ht = [];
 
     /*
 function display_array()
