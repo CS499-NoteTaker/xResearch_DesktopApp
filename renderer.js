@@ -167,8 +167,22 @@ var convertToHtml = function(e) {
     //document.getElementById("htmlTextBox").textContent = quillHtml;
     //after converting to html, put that quillHtml into the array.
     arr.ht.push(quillHtml);
+    console.log(typeof arr.ht[0])
+    display_array();
     quill.deleteText(0, quill.getLength());
 };
+
+
+function display_array() {
+    var e = "";
+    for (var i = 0; i < arr.ht.length; i++) {
+        e += "<li/><a/> Element " + i + " = " + arr.ht[i].substring(0, 10) + "<br/>";
+    }
+    console.log(e);
+    document.getElementById("myUL").innerHTML = e;
+}
+
+
 //want to create new quillbox to write new thing every time.IMPORTANT
 //The issue now is DONT DELETE THE ARRAY WHEN YOU CANCEL THE DOWNLOAD.
 //WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT

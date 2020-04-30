@@ -16,6 +16,10 @@ ul.tools li {
     cursor: pointer;
 }
 
+.jquill {
+    background-color: azure;
+}
+
 #loading-indicator {
     position: absolute;
     left: 200px;
@@ -48,6 +52,7 @@ ul.tools li {
 }
 
 #myUL {
+    background-color: #f6f6f6;
     border: 1px solid #ddd;
     height: 350px;
     overflow-y: auto;
@@ -60,7 +65,7 @@ ul.tools li {
     border: 1px solid #ddd;
     margin-top: -1px;
     /* Prevent double borders */
-    background-color: #f6f6f6;
+    background-color: #ececec;
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
@@ -69,5 +74,5 @@ ul.tools li {
 }
 
 #myUL li a:hover:not(.header) {
-    background-color: #eee;
+    background-color: rgb(213, 213, 213);
 }
