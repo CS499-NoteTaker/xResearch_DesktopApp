@@ -176,7 +176,7 @@ var convertToHtml = function(e) {
 function display_array() {
     var e = "";
     for (var i = 0; i < arr.ht.length; i++) {
-        e += "<li/><a/> Element " + i + " = " + arr.ht[i].substring(0, 10) + "<br/>";
+        e += "<li/><a/>" + i + " = " + arr.ht[i].substring(0, 10) + "<br/>";
     }
     console.log(e);
     document.getElementById("myUL").innerHTML = e;

@@ -63,7 +63,7 @@ ul.tools li {
 
 #myUL li a {
     border: 1px solid #ddd;
-    margin-top: -1px;
+    margin: 3px;
     /* Prevent double borders */
     background-color: #ececec;
     padding: 12px;
