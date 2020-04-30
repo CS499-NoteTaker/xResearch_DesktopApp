@@ -172,7 +172,9 @@ var convertToHtml = function(e) {
     quill.deleteText(0, quill.getLength());
 };
 
-
+// When display array method is called, it will concatinate 
+// a new html to add to the list and be able to display researched 
+// cells that has been added to the list.
 function display_array() {
     var e = "";
     for (var i = 0; i < arr.ht.length; i++) {
