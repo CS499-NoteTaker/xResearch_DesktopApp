@@ -49,11 +49,11 @@ ul.tools li {
 
 #myUL {
     border: 1px solid #ddd;
-    height: 200px;
+    height: 350px;
     overflow-y: auto;
     list-style-type: none;
     padding: 5px;
-    margin: 1px;
+    margin: 5px;
 }
 
 #myUL li a {
