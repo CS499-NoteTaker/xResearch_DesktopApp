@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-   <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" />-->
-   <meta charset="UTF-8">
-   <link rel="stylesheet" href="styles.css">
+
+<head>
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" />-->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <!--
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
    -->
-   <title>ApplicationX</title>
+    <title>ApplicationX</title>
 
 
-   <!-- Include the Quill library -->
-   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-   <script src = "./jquery-3.4.1.min.js"></script>
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="./jquery-3.4.1.min.js"></script>
 
-   <!-- This is the script for deepai text summarization-->?
-   <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
+    <!-- This is the script for deepai text summarization-->?
+    <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
 
-      <!--
+    <!--
    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
@@ -26,74 +27,81 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         -->
 
-<!-- add A SCROLL bar-->
-   <!-- Include stylesheet -->
-   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <!-- add A SCROLL bar-->
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-   <!-- Theme included stylesheets -->
-   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-   <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+    <!-- Theme included stylesheets -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
 
 
-   </head>
-  <body>
+</head>
+
+<body>
 
     <h1>X-Research</h1>
 
-    <div id="toolbar"></div>
-    <div id="editor"></div>
+    <div class="row">
+        <div class="leftside">
+            <div id="toolbar"></div>
+            <div id="editor"></div>
 
-    <img src="loading.gif" id="loading-indicator" style="display:none" />
-    <!-- call from other script-->
-    <script src="./QuillTool.js"></script>
-    <ul class="tools">
-    <li onclick = "summarizeWords2();">Summarize </li>
-</ul>
+            <img src="loading.gif" id="loading-indicator" style="display:none" />
+            <!-- call from other script-->
+            <script src="./QuillTool.js"></script>
+            <ul class="tools">
+                <li onclick="summarizeWords2();">Summarize </li>
+            </ul>
 
-    <p></p>
-    <p></p>
-    <p></p>
-    Summarize: <select id="percentlength">
-    <option value="20" selected>20%</option>
-    <option value="25" selected>25%</option>
-    <option value="30" selected>30%</option>
-    <option value="35" selected>35%</option>
-    <option value="40" selected>40%</option>
-    <option value="45" selected>45%</option>
-    <option value="50" selected>50%</option>
-    <option value="55" selected>55% </option>
-    <option value="60" selected>60%</option>
-    <option value="65" selected>65%</option>
-    <option value="70" selected>70%</option>
-    <option value="75" selected>75%</option>
-    <option value="80" selected>80%</option>
+            <p></p>
+            <p></p>
+            <p></p>
+            Summarize: <select id="percentlength">
+        <option value="20" selected>20%</option>
+        <option value="25" selected>25%</option>
+        <option value="30" selected>30%</option>
+        <option value="35" selected>35%</option>
+        <option value="40" selected>40%</option>
+        <option value="45" selected>45%</option>
+        <option value="50" selected>50%</option>
+        <option value="55" selected>55% </option>
+        <option value="60" selected>60%</option>
+        <option value="65" selected>65%</option>
+        <option value="70" selected>70%</option>
+        <option value="75" selected>75%</option>
+        <option value="80" selected>80%</option>
 
-</select>
-    <!-- Convert To HTML Button  -->
-    <p></p>
-    <div id="LeftBox">
-    <button id="Summarize">Summarize</button>
-    <button id="KeepInArray">Add Content</button>
+      </select>
+            <!-- Convert To HTML Button  -->
+            <p></p>
 
-      <!-- Convert To PDF Button  -->
-     <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
-     <button id="ConvertToPdfButton">Convert To PDF</button>
-     <div id = "add"></div>
+
+            <button id="Summarize">Summarize</button>
+            <button id="KeepInArray">Add Content</button>
+
+            <!-- Convert To PDF Button  -->
+            <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
+            <button id="ConvertToPdfButton">Convert To PDF</button>
+            <div id="add"></div>
+        </div>
+
+        <div class="rightside">
+            <h2>List of Researched Cells</h2>
+            <p>Transform a basic list into a list group:</p>
+            <ul id="myUL">
+                <li><a>Adele</a></li>
+                <li><a>Agnes</a></li>
+
+                <li><a>Billy</a></li>
+                <li><a>Bob</a></li>
+
+                <li><a>Calvin</a></li>
+                <li><a>Christina</a></li>
+                <li><a>Cindy</a></li>
+            </ul>
+        </div>
     </div>
-     <div id="RightBox">
-      <h2>List of Researched Cells</h2>
-      <p>Transform a basic list into a list group:</p>
-      <ul id="myUL">
-        <li><a href="#">Adele</a></li>
-        <li><a href="#">Agnes</a></li>
-  
-        <li><a href="#">Billy</a></li>
-        <li><a href="#">Bob</a></li>
-  
-        <li><a href="#">Calvin</a></li>
-        <li><a href="#">Christina</a></li>
-        <li><a href="#">Cindy</a></li>
-    </ul>
 
 
     <!-- You can also require other files to run in this process -->
@@ -102,6 +110,6 @@
     </script>
     <!-- Load the JavaScript script for the client application-->
     <!--<script src="C:/Users/joshmoran05/Documents/Joshua Moran/PLU/4-Senior Year/Fall/CS499-A/Electron Practice/electron-quick-start/index.js"> </script>-->
-  </body>
+</body>
 
-  </html>
+</html>
