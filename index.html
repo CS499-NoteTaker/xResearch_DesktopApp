@@ -75,28 +75,7 @@
     <button id="Summarize">Summarize</button>
     <button id="KeepInArray">Add Content</button>
 
-    <!--
-    <script>
-      function convertToHtml() {
-        //Gets the Delta object
-        var delta = quill.getContents();
-        console.log( quill.getContents() );
-
-        var length = quill.getLength();
-        console.log( "Length: " + length);
-
-        var text = quill.getText(0, length);
-        console.log( text );
-
-        var quillHtml = String(quill.root.innerHTML);
-        console.log( quillHtml );
-
-        document.getElementById("htmlTextBox").textContent = quillHtml;
-    }
-    </script>
-    -->
-
-     <!-- Convert To PDF Button  -->
+      <!-- Convert To PDF Button  -->
      <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
      <button id="ConvertToPdfButton">Convert To PDF</button>
      <div id = "add"></div>
@@ -116,58 +95,9 @@
         <li><a href="#">Cindy</a></li>
     </ul>
 
-     <!--
-    <script>
-      function convertToPdf() {
-        var htmlData = String(document.getElementById("htmlTextBox").textContent);
-        console.log(htmlData)
-        //adds html Data to json array object
-        var htmlDataJson =
-          {
-            "htmlDataArray":[htmlData]
-          };
-
-        console.log( htmlDataJson );
-
-        /*
-          function httpGetAsync(theUrl, callback) {
-              var xmlHttp = new XMLHttpRequest();
-              xmlHttp.onreadystatechange = function() {
-                  if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                      callback(xmlHttp.responseText);
-              }
-              xmlHttp.open("GET", theUrl, true); // true for asynchronous
-              xmlHttp.send(null);
-          }
-        */
-      }
-
-    </script>
-
-    -->
-
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
-
-
-    <!--
-    <script type="text/javascript">
-      const target = document.querySelector('div.target');
-
-      target.addEventListener('paste', (event) => {
-        var clipboardData = event.clipboardData || window.clipboardData;
-        let text = clipboardData.getData('text/plain');
-        let htmlText = clipboardData.getData('text/html');
-        console.log(text);
-
-        const selection = window.getSelection();
-        if (!selection.rangeCount) return false;
-        selection.deleteFromDocument();
-        selection.getRangeAt(0).insertNode(document.createTextNode(htmlText));
-        event.preventDefault();
-      });
-      -->
 
     </script>
     <!-- Load the JavaScript script for the client application-->
