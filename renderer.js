@@ -63,7 +63,9 @@ var main = function() {
     let ResearchedCellItem = document.getElementById("ResearchedCellsList");
     ResearchedCellItem.addEventListener("click", LoadResearchedCell);
 
-
+    let DeleteRcButton = document.getElementById("DeleteRc");
+    DeleteRcButton.addEventListener("click", DeleteRc);
+    //DeleteRcButton.addEventListener("click", DeleteRc);
     //prevent deselecting texts
 
 
@@ -82,6 +84,14 @@ var main = function() {
     //   });
 
 };
+
+var DeleteRc = function(e) {
+    arr.ht.splice(rcIndexSelected, 1);
+    strResearchedCells.splice(rcIndexSelected, 1);
+    rcSelected = false;
+    quill.root.innerHTML = "";
+    display_array();
+}
 
 var LoadResearchedCell = function(e) {
 
