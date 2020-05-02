@@ -94,14 +94,14 @@ var DeleteRc = function(e) {
 }
 
 var LoadResearchedCell = function(e) {
+    var rcIndex = parseInt(e.target.id);
 
-    if (rcSelected) {
+    if (rcSelected && rcIndexSelected == rcIndex) {
         rcSelected = false;
         quill.root.innerHTML = "";
     } else {
         console.log("LoadResearchedCell function clicked");
         if (e.target && e.target.matches("a")) {
-            var rcIndex = parseInt(e.target.id);
             rcSelected = true;
             rcIndexSelected = rcIndex;
 
