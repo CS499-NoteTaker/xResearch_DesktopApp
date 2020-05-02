@@ -95,21 +95,26 @@ var DeleteRc = function(e) {
 
 var LoadResearchedCell = function(e) {
 
-    console.log("LoadResearchedCell function clicked");
-    if (e.target && e.target.matches("a")) {
-        console.log("Clicked: " + e.target.innerText);
-        console.log("a.id: " + e.target.id);
+    if (rcSelected) {
+        rcSelected = false;
+        quill.root.innerHTML = "";
+    } else {
+        console.log("LoadResearchedCell function clicked");
+        if (e.target && e.target.matches("a")) {
+            var rcIndex = parseInt(e.target.id);
+            rcSelected = true;
+            rcIndexSelected = rcIndex;
 
-        var rcIndex = parseInt(e.target.id);
-        rcIndexSelected = rcIndex;
-        rcSelected = true;
-
-        console.log(typeof rcIndex)
-        var loadHtmlStr = arr.ht[rcIndex];
+            console.log("Clicked: " + e.target.innerText);
+            console.log("a.id: " + e.target.id);
 
 
-        quill.root.innerHTML = loadHtmlStr;
+            console.log(typeof rcIndex)
+            var loadHtmlStr = arr.ht[rcIndex];
 
+
+            quill.root.innerHTML = loadHtmlStr;
+        }
     }
 }
 
