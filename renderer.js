@@ -84,13 +84,46 @@ var LoadResearchedCell = function(e) {
     if (e.target && e.target.matches("a")) {
         console.log("Clicked: " + e.target.innerText);
         console.log("a.id: " + e.target.id);
-        console.log(typeof e.target.id)
 
+        var rcIndex = parseInt(e.target.id);
+        console.log(typeof rcIndex)
+        var loadHtml = arr.ht[rcIndex];
 
 
     }
 }
 
+var support = (function() {
+    if (!window.DOMParser) return false;
+    var parser = new DOMParser();
+    try {
+        parser.parseFromString('x', 'text/html');
+    } catch (err) {
+        return false;
+    }
+    return true;
+})();
+
+/**
+ * Convert a template string into HTML DOM nodes
+ * @param  {String} str The template string
+ * @return {Node}       The template HTML
+ */
+var stringToHTML = function(str) {
+
+    // If DOMParser is supported, use it
+    if (support) {
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(str, 'text/html');
+        return doc.body;
+    }
+
+    // Otherwise, fallback to old-school method
+    var dom = document.createElement('div');
+    dom.innerHTML = str;
+    return dom;
+
+};
 
 
 
@@ -200,6 +233,7 @@ var convertToHtml = function(e) {
 // a new html to add to the list and be able to display researched 
 // cells that has been added to the list.
 function display_array() {
+    console.log("arr.ht.length: " + arr.ht.length)
     for (var i = 0; i < arr.ht.length; i++) {
         var li = document.createElement('li');
         var a = document.createElement('a');
@@ -209,8 +243,13 @@ function display_array() {
         a.id = i;
         li.appendChild(a);
     }
-    console.log(li);
-    document.getElementById("ResearchedCellsList").appendChild(li);
+    // Don't try to display array if there are not elements
+    if (arr.ht.length == 0) {
+        document.getElementById("ResearchedCellsList").innerHTML = "";
+    } else {
+        console.log(li);
+        document.getElementById("ResearchedCellsList").appendChild(li);
+    }
 }
 
 
@@ -231,6 +270,7 @@ var convertToPdf = function(e) {
     // Flushes researched cells and empties array
     var htmlData = JSON.stringify(arr);
     arr.ht = [];
+    strResearchedCells = [];
     display_array();
 
     console.log(htmlData)
