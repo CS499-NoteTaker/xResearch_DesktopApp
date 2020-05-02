@@ -56,6 +56,10 @@ var main = function() {
     ConvertToPdfButton.addEventListener("click", convertToPdf);
 
 
+    let ResearchedCellItem = document.getElementById("ResearchedCellsList");
+    ResearchedCellItem.addEventListener("click", LoadResearchedCell);
+
+
     //prevent deselecting texts
 
 
@@ -74,6 +78,22 @@ var main = function() {
     //   });
 
 };
+
+var LoadResearchedCell = function(e) {
+    console.log("LoadResearchedCell function clicked");
+    if (e.target && e.target.matches("a")) {
+        console.log("Clicked: " + e.target.innerText);
+        console.log("a.id: " + e.target.id);
+        console.log(typeof e.target.id)
+
+
+
+    }
+}
+
+
+
+
 //summarize the selected text by the user
 //Not gonna summarize codes
 var summarizeWords = function() {
@@ -180,13 +200,22 @@ var convertToHtml = function(e) {
 // a new html to add to the list and be able to display researched 
 // cells that has been added to the list.
 function display_array() {
-    var e = "";
     for (var i = 0; i < arr.ht.length; i++) {
-        e += "<li id=" + i + "/><a/>" + i + " = " + strResearchedCells[i].substring(0, 20) + "...<br/>";
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        var text = strResearchedCells[i].substring(0, 20);
+
+        a.appendChild(document.createTextNode(text));
+        a.id = i;
+        li.appendChild(a);
     }
-    console.log(e);
-    document.getElementById("ResearchedCellsList").innerHTML = e;
+    console.log(li);
+    document.getElementById("ResearchedCellsList").appendChild(li);
 }
+
+
+
+
 
 
 //want to create new quillbox to write new thing every time.IMPORTANT
