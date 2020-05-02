@@ -9,6 +9,10 @@ var selection;
 var pageX;
 var pageY;
 
+
+var rcSelected = false;
+var rcIndexSelected = 0;
+
 var strResearchedCells = [];
 arr = {
     "ht": []
@@ -80,14 +84,19 @@ var main = function() {
 };
 
 var LoadResearchedCell = function(e) {
+
     console.log("LoadResearchedCell function clicked");
     if (e.target && e.target.matches("a")) {
         console.log("Clicked: " + e.target.innerText);
         console.log("a.id: " + e.target.id);
 
         var rcIndex = parseInt(e.target.id);
+        rcIndexSelected = rcIndex;
+        rcSelected = true;
+
         console.log(typeof rcIndex)
         var loadHtmlStr = arr.ht[rcIndex];
+
 
         quill.root.innerHTML = loadHtmlStr;
 
@@ -176,12 +185,8 @@ var summarizeWords2 = function() {
 var convertToHtml = function(e) {
     //Gets the Delta object
     var delta = quill.getContents();
-    console.log("content", quill.getContents());
-
-    var length = quill.getLength();
-    console.log("Length: " + length);
-
-    var researchedCellText = quill.getText(0, length);
+    var quillTextLength = quill.getLength();
+    var researchedCellText = quill.getText(0, quillTextLength);
     console.log(researchedCellText);
 
     var quillHtml = String(quill.root.innerHTML);
@@ -191,8 +196,19 @@ var convertToHtml = function(e) {
     //after converting to html, put that html into the array.
     // While also preserving the regular text to display in the list.
     //strResearchedCells.push(quill.root.in);
-    arr.ht.push(quillHtml);
-    strResearchedCells.push(researchedCellText);
+
+    // If a research cell is selected then load the content
+    // back at the same index of the array.
+    if (rcSelected) {
+        arr.ht[rcIndexSelected] = quillHtml;
+        strResearchedCells[rcIndexSelected] = researchedCellText;
+        rcSelected = false;
+    } else {
+        strResearchedCells.push(researchedCellText);
+        arr.ht.push(quillHtml);
+    }
+
+
     console.log(typeof strResearchedCells[0]);
     display_array();
     quill.deleteText(0, quill.getLength());
@@ -202,22 +218,25 @@ var convertToHtml = function(e) {
 // a new html to add to the list and be able to display researched 
 // cells that has been added to the list.
 function display_array() {
-    console.log("arr.ht.length: " + arr.ht.length)
-    for (var i = 0; i < arr.ht.length; i++) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        var text = strResearchedCells[i].substring(0, 20);
+    console.log(strResearchedCells);
 
-        a.appendChild(document.createTextNode(text));
-        a.id = i;
-        li.appendChild(a);
-    }
     // Don't try to display array if there are not elements
+    document.getElementById("ResearchedCellsList").innerHTML = "";
+
     if (arr.ht.length == 0) {
         document.getElementById("ResearchedCellsList").innerHTML = "";
     } else {
-        console.log(li);
-        document.getElementById("ResearchedCellsList").appendChild(li);
+        for (var i = 0; i < strResearchedCells.length; i++) {
+            var li = document.createElement('li');
+            var a = document.createElement('a');
+            var text = strResearchedCells[i].substring(0, 20);
+
+            a.appendChild(document.createTextNode(text));
+            a.id = i;
+            li.appendChild(a);
+            document.getElementById("ResearchedCellsList").appendChild(li);
+            console.log(li);
+        }
     }
 }
 
