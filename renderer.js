@@ -87,8 +87,9 @@ var LoadResearchedCell = function(e) {
 
         var rcIndex = parseInt(e.target.id);
         console.log(typeof rcIndex)
-        var loadHtml = arr.ht[rcIndex];
+        var loadHtmlStr = arr.ht[rcIndex];
 
+        quill.root.innerHTML = loadHtmlStr;
 
     }
 }
