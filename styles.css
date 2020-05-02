@@ -51,7 +51,7 @@ ul.tools li {
     margin-bottom: 12px;
 }
 
-#myUL {
+#ResearchedCellsList {
     background-color: #f6f6f6;
     border: 1px solid #ddd;
     height: 350px;
@@ -61,7 +61,7 @@ ul.tools li {
     margin: 5px;
 }
 
-#myUL li a {
+#ResearchedCellsList li a {
     border: 1px solid #ddd;
     margin: 3px;
     /* Prevent double borders */
@@ -73,6 +73,6 @@ ul.tools li {
     display: block
 }
 
-#myUL li a:hover:not(.header) {
+#ResearchedCellsList li a:hover:not(.header) {
     background-color: rgb(213, 213, 213);
 }

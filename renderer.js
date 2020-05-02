@@ -9,7 +9,7 @@ var selection;
 var pageX;
 var pageY;
 
-
+var strResearchedCells = [];
 arr = {
     "ht": []
 }
@@ -159,16 +159,19 @@ var convertToHtml = function(e) {
     var length = quill.getLength();
     console.log("Length: " + length);
 
-    var text = quill.getText(0, length);
-    console.log(text);
+    var researchedCellText = quill.getText(0, length);
+    console.log(researchedCellText);
 
     var quillHtml = String(quill.root.innerHTML);
     console.log(quillHtml);
 
     //document.getElementById("htmlTextBox").textContent = quillHtml;
-    //after converting to html, put that quillHtml into the array.
+    //after converting to html, put that html into the array.
+    // While also preserving the regular text to display in the list.
+    //strResearchedCells.push(quill.root.in);
     arr.ht.push(quillHtml);
-    console.log(typeof arr.ht[0])
+    strResearchedCells.push(researchedCellText);
+    console.log(typeof strResearchedCells[0]);
     display_array();
     quill.deleteText(0, quill.getLength());
 };
@@ -179,10 +182,10 @@ var convertToHtml = function(e) {
 function display_array() {
     var e = "";
     for (var i = 0; i < arr.ht.length; i++) {
-        e += "<li id=" + i + "/><a/>" + i + " = " + arr.ht[i].substring(0, 10) + "<br/>";
+        e += "<li id=" + i + "/><a/>" + i + " = " + strResearchedCells[i].substring(0, 20) + "...<br/>";
     }
     console.log(e);
-    document.getElementById("myUL").innerHTML = e;
+    document.getElementById("ResearchedCellsList").innerHTML = e;
 }
 
 
