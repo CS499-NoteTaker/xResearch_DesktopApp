@@ -299,7 +299,7 @@ var convertToPdf = function(e) {
         }
     });
 
-    xhr.open('POST', 'http://localhost:6969/document/convert', true); //open the request
+    xhr.open('POST', 'http://localhost:6968/document/convert', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
