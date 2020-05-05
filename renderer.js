@@ -65,10 +65,12 @@ var main = function() {
 
     let DeleteRcButton = document.getElementById("DeleteRc");
     DeleteRcButton.addEventListener("click", DeleteRc);
-    //DeleteRcButton.addEventListener("click", DeleteRc);
-    //prevent deselecting texts
 
+    let GenerateCitationButton = document.getElementById("generateCitationButton");
+    GenerateCitationButton.addEventListener("click", GenerateCitation)
 
+    let AddCitationButton = document.getElementById("addCitationButton");
+    AddCitationButton.addEventListener("click", AddCitation)
 
     //POSTING summary
     //   document.addEventListener("click",function(){
@@ -84,6 +86,53 @@ var main = function() {
     //   });
 
 };
+
+var AddCitation = function(e) {
+    console.log("AddCitation method called.");
+
+    var index; // Get index at of researched cell user decided to map citation
+    var citation;
+
+    // Here, get all textboxes attributes and add them to a json object accordingly.
+    // EXAMPLE: 
+    // citation = { author: getElementbyId("authorTextfield").getText(), etc. }
+
+
+    /*
+    arr.citationObjects.push({
+        "index": index
+        "citation": citation
+    })
+    */
+
+}
+
+
+var GenerateCitation = function(e) {
+    console.log("GenerateCitation method called.");
+    // get the json object returned from method
+    // citation = scrapeUrl();
+    scrapeUrl();
+
+    // After getting the Json object from scraping url.
+    // Populate every attribute/field of json object
+    // back into the textfields of html accordingly.
+
+}
+
+
+// method should return a json object
+function scrapeUrl(url) {
+    console.log("ScrapeUrl method called.");
+
+    //ajax.call(url);
+    // Here should make ajax (https request) to the server
+    // and gets a json object from the server
+    // return json object
+}
+
+
+
 
 var DeleteRc = function(e) {
     arr.ht.splice(rcIndexSelected, 1);
