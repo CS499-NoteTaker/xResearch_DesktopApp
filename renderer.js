@@ -15,7 +15,8 @@ var rcIndexSelected = 0;
 
 var strResearchedCells = [];
 arr = {
-    "ht": []
+    "ht": [],
+    "citationObjects": []
 }
 var main = function() {
     //adding context menu on right click for summarizing
@@ -65,10 +66,12 @@ var main = function() {
 
     let DeleteRcButton = document.getElementById("DeleteRc");
     DeleteRcButton.addEventListener("click", DeleteRc);
-    //DeleteRcButton.addEventListener("click", DeleteRc);
-    //prevent deselecting texts
 
+    let GenerateCitationButton = document.getElementById("generateCitationButton");
+    GenerateCitationButton.addEventListener("click", GenerateCitation)
 
+    let AddCitationButton = document.getElementById("addCitationButton");
+    AddCitationButton.addEventListener("click", AddCitation)
 
     //POSTING summary
     //   document.addEventListener("click",function(){
@@ -84,6 +87,174 @@ var main = function() {
     //   });
 
 };
+
+/**
+ * Is a method when "Add Citation" button is clicked. Gets the appropriate
+ * json Citation object and maps the object with some index that the user
+ * chooses to map citation to paragraph/researched cell. Then pushes that
+ * into arr (the research paper). 
+ */
+var AddCitation = function() {
+    console.log("AddCitation method called.");
+
+    var index = document.getElementById("itemNumber").value;
+    var citation = getCitationAttributes();
+
+    var citationObject = {
+        "index": index,
+        "citation": citation
+    };
+
+    arr.citationObjects.push(citationObject);
+    console.log(JSON.stringify(arr));
+}
+
+/**
+ * In this function, we return a citation object that extracts
+ * values from the Citation form textboxes.
+ * Maps them accordingly.
+ */
+function getCitationAttributes() {
+    // Here, get all textboxes attributes and add them to a json object accordingly.
+    var inputDate = document.getElementById("datePublished").value;
+    var releasedDate = (new Date(inputDate)).toJSON();
+    var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
+    var pageTitle = document.getElementById("articleTitle").value;
+    var namesTextField = document.getElementById("authors").value;
+    var authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    var publisher = document.getElementById("publisher").value;
+    var url = document.getElementById("url").value;
+    var websiteTitle = document.getElementById("websiteTitle").value;
+
+    var citation = {
+        "releasedDate": releasedDate,
+        "accessDate": accessDate,
+        "pageTitle": pageTitle,
+        "authorNames": authorNames,
+        "publisher": publisher,
+        "url": url,
+        "websiteTitle": websiteTitle
+    };
+
+    return citation;
+}
+
+function setCitationAttributes(citation) {
+    // Here, get all textboxes attributes and add them to a json object accordingly.
+    var releasedDateString = formatDate(citation.releasedDate);
+    document.getElementById("datePublished").value = releasedDateString;
+    document.getElementById("articleTitle").value = citation.pageTitle;
+
+    var authorNamesString = "";
+    if (citation.authorNames.length > 0) {
+        //Post fence algorithm to concatenate author names
+        authorNamesString = authorNamesString + citation.authorNames[0];
+        for (let index = 1; index < citation.authorNames.length; index++) {
+            const element = citation.authorNames[index];
+            authorNamesString = authorNamesString + "; " + element;
+        }
+    }
+
+    document.getElementById("authors").value = authorNamesString;
+    document.getElementById("publisher").value = citation.publisher;
+    document.getElementById("url").value = citation.url;
+    document.getElementById("websiteTitle").value = citation.websiteTitle;
+
+    console.log("setCitationAttr: websiteTitle = " + citation.websiteTitle);
+
+    console.log("setCitationAttr: citation = " + citation);
+    console.log("setCitationAttr: typeOf:citation = " + typeof citation);
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
+var GenerateCitation = async function(e) {
+    console.log("GenerateCitation method called.");
+    // get the json object returned from method
+    var url = document.getElementById("generateUrlCitation").value;
+    var xhrResponse = await scrapeUrlRequest(url);
+
+    xhrResponse.addEventListener("readystatechange", function(e) {
+        //4 means response is ready!
+        if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
+            //blob object to store the response from the server.
+            citation = JSON.parse(this.responseText);
+            console.log("Response from EventListener: " + JSON.stringify(citation));
+
+            setCitationAttributes(citation);
+
+        }
+    });
+
+    // After getting the Json object from scraping url.
+    // Populate every attribute/field of json object
+    // back into the textfields of html accordingly.
+
+}
+
+var ViewCitation = function(e) {
+    var citation = getCitationAttributes();
+
+    //make ajax call to for "citation" var
+    //wait for response to then print it out in the element.
+}
+
+
+// method should return a json object
+function scrapeUrlRequest(url) {
+    var urlData = { "url": url };
+    var payload = JSON.stringify(urlData);
+
+    var response;
+    console.log("ScrapeUrl method called.");
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    //used onreadystatechange (yes) ||    onload(no)
+    xhr.addEventListener("readystatechange", function(e) {
+        //4 means response is ready!
+        if (this.readyState === 4) {
+            //blob object to store the response from the server.
+            response = JSON.parse(this.responseText);
+            console.log("Response from EventListener: " + JSON.stringify(response));
+        }
+    });
+
+    xhr.open('POST', 'http://localhost:6968/document/scrapeurl', true); //open the request
+    xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
+    /**
+      Loading sign while progress
+    **/
+    xhr.onprogress = function(event) {
+        event.loaded;
+        event.total;
+    };
+    //xhr.responseType = 'json';
+
+    //!! Must await this //
+    xhr.send(payload);
+    return xhr;
+    //console.log("response after send(): " + JSON.stringify(response));
+
+    //ajax.call(url);
+    // Here should make ajax (https request) to the server
+    // and gets a json object from the server
+    // return json object
+}
+
+
+
 
 var DeleteRc = function(e) {
     arr.ht.splice(rcIndexSelected, 1);
