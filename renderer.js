@@ -117,8 +117,8 @@ var AddCitation = function() {
 function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     var inputDate = document.getElementById("datePublished").value;
-    var releasedDate = (new Date(inputDate)).toISOString();
-    var accessDate = (new Date()).toISOString(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
+    var releasedDate = (new Date(inputDate)).toJSON();
+    var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
     var pageTitle = document.getElementById("articleTitle").value;
     var namesTextField = document.getElementById("authors").value;
     var authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
@@ -141,8 +141,8 @@ function getCitationAttributes() {
 
 function setCitationAttributes(citation) {
     // Here, get all textboxes attributes and add them to a json object accordingly.
-    var releasedDate = new Date(citation.releasedDate);
-    document.getElementById("datePublished").value = releasedDate.getDate();
+    var releasedDateString = formatDate(citation.releasedDate);
+    document.getElementById("datePublished").value = releasedDateString;
     document.getElementById("articleTitle").value = citation.pageTitle;
 
     var authorNamesString = "";
@@ -164,6 +164,20 @@ function setCitationAttributes(citation) {
 
     console.log("setCitationAttr: citation = " + citation);
     console.log("setCitationAttr: typeOf:citation = " + typeof citation);
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 
 var GenerateCitation = async function(e) {
