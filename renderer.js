@@ -91,41 +91,44 @@ var main = function() {
 var AddCitation = function(e) {
     console.log("AddCitation method called.");
 
-    var index; // Get index at of researched cell user decided to map citation
-    var citation;
+    var citationObject = getCitationObject();
 
+    arr.citationObjects.push(citationObject);
+    console.log(JSON.stringify(arr));
+}
+
+function getCitationObject() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     // EXAMPLE: 
     // citation = { author: getElementbyId("authorTextfield").getText(), etc. }
-
-
     // Dates are in format: UTC
-    var releasedDate = "01/25/2020";
-    var accessDate = "05/05/2020"; // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
-    var pageTitle = "Capstone";
-    var authorNames = ["JoshMoran", "San Nge"];
-    var publisher = "PLU";
-    var url = "www.plu.edu";
-    var websiteTitle = "Pacific Lutheran University";
+    var inputDate = document.getElementById("datePublished").value;
+    var releasedDate = (new Date(inputDate)).toISOString();
+    var accessDate = (new Date()).toISOString(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
+    var pageTitle = document.getElementById("articleTitle").value;
+    var namesTextField = document.getElementById("authors").value;
+    var authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    var publisher = document.getElementById("publisher").value;
+    var url = document.getElementById("url").value;
+    var websiteTitle = document.getElementById("websiteTitle").value;
 
-    index = 0;
-    citation = {
+
+    var index = document.getElementById("itemNumber").value;
+    var citation = {
         "releasedDate": releasedDate,
         "accessDate": accessDate,
         "pageTitle": pageTitle,
         "authorNames": authorNames,
+        "publisher": publisher,
         "url": url,
         "websiteTitle": websiteTitle
     };
 
-    arr.citationObjects.push({
+    return {
         "index": index,
         "citation": citation
-    })
-
-    console.log(JSON.stringify(arr));
+    };
 }
-
 
 var GenerateCitation = function(e) {
     console.log("GenerateCitation method called.");
