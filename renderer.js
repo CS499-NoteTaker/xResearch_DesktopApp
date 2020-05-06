@@ -88,20 +88,34 @@ var main = function() {
 
 };
 
-var AddCitation = function(e) {
+/**
+ * Is a method when "Add Citation" button is clicked. Gets the appropriate
+ * json Citation object and maps the object with some index that the user
+ * chooses to map citation to paragraph/researched cell. Then pushes that
+ * into arr (the research paper). 
+ */
+var AddCitation = function() {
     console.log("AddCitation method called.");
 
-    var citationObject = getCitationObject();
+    var index = document.getElementById("itemNumber").value;
+    var citation = getCitationAttributes();
+
+    var citationObject = {
+        "index": index,
+        "citation": citation
+    };
 
     arr.citationObjects.push(citationObject);
     console.log(JSON.stringify(arr));
 }
 
-function getCitationObject() {
+/**
+ * In this function, we return a citation object that extracts
+ * values from the Citation form textboxes.
+ * Maps them accordingly.
+ */
+function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
-    // EXAMPLE: 
-    // citation = { author: getElementbyId("authorTextfield").getText(), etc. }
-    // Dates are in format: UTC
     var inputDate = document.getElementById("datePublished").value;
     var releasedDate = (new Date(inputDate)).toISOString();
     var accessDate = (new Date()).toISOString(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -112,8 +126,6 @@ function getCitationObject() {
     var url = document.getElementById("url").value;
     var websiteTitle = document.getElementById("websiteTitle").value;
 
-
-    var index = document.getElementById("itemNumber").value;
     var citation = {
         "releasedDate": releasedDate,
         "accessDate": accessDate,
@@ -124,10 +136,7 @@ function getCitationObject() {
         "websiteTitle": websiteTitle
     };
 
-    return {
-        "index": index,
-        "citation": citation
-    };
+    return citation;
 }
 
 var GenerateCitation = function(e) {
