@@ -68,10 +68,15 @@ var main = function() {
     DeleteRcButton.addEventListener("click", DeleteRc);
 
     let GenerateCitationButton = document.getElementById("generateCitationButton");
-    GenerateCitationButton.addEventListener("click", GenerateCitation)
+    GenerateCitationButton.addEventListener("click", GenerateCitation);
 
     let AddCitationButton = document.getElementById("addCitationButton");
-    AddCitationButton.addEventListener("click", AddCitation)
+    AddCitationButton.addEventListener("click", AddCitation);
+
+    let ViewCitationButton = document.getElementById("viewCitationButton");
+    ViewCitationButton.addEventListener("click", ViewCitation)
+
+
 
     //POSTING summary
     //   document.addEventListener("click",function(){
@@ -117,7 +122,7 @@ var AddCitation = function() {
 function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     var inputDate = document.getElementById("datePublished").value;
-    var releasedDate = (new Date(inputDate)).toJSON();
+    var releaseDate = (new Date(inputDate)).toJSON();
     var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
     var pageTitle = document.getElementById("articleTitle").value;
     var namesTextField = document.getElementById("authors").value;
@@ -127,7 +132,7 @@ function getCitationAttributes() {
     var websiteTitle = document.getElementById("websiteTitle").value;
 
     var citation = {
-        "releasedDate": releasedDate,
+        "releaseDate": releaseDate,
         "accessDate": accessDate,
         "pageTitle": pageTitle,
         "authorNames": authorNames,
@@ -141,7 +146,7 @@ function getCitationAttributes() {
 
 function setCitationAttributes(citation) {
     // Here, get all textboxes attributes and add them to a json object accordingly.
-    var releasedDateString = formatDate(citation.releasedDate);
+    var releasedDateString = formatDate(citation.releaseDate);
     document.getElementById("datePublished").value = releasedDateString;
     document.getElementById("articleTitle").value = citation.pageTitle;
 
@@ -190,7 +195,7 @@ var GenerateCitation = async function(e) {
         //4 means response is ready!
         if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
             //blob object to store the response from the server.
-            citation = JSON.parse(this.responseText);
+            var citation = JSON.parse(this.responseText);
             console.log("Response from EventListener: " + JSON.stringify(citation));
 
             setCitationAttributes(citation);
@@ -207,16 +212,62 @@ var GenerateCitation = async function(e) {
 var ViewCitation = function(e) {
     var citation = getCitationAttributes();
 
+    //var xhrResponse = formatCitationHttpRequest(citation);
+
+    var citationFormat;
+    /*
+    xhrResponse.addEventListener("readystatechange", function(e) {
+        //4 means response is ready!
+        if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
+            //blob object to store the response from the server.
+            citationFormat = this.responseText;
+            displayFormattedCitation(citationFormat);
+        }
+    });
+    */
+
+    console.log("View Citation Method: ");
+    displayFormattedCitation("NOTHING");
     //make ajax call to for "citation" var
     //wait for response to then print it out in the element.
 }
 
+function displayFormattedCitation(formatCitation) {
+    //Setting View here.
+    //document.getElementById("citationDisplay").value = citationFormat;
+    console.log("displayFormattedCitation Method: ");
+
+    document.getElementById("citationDisplay").innerHTML = formatCitation;
+}
+
+function formatCitationHttpRequest(citation) {
+    var payload = JSON.stringify(citation);
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
+    xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
+    /**
+      Loading sign while progress
+    **/
+    xhr.onprogress = function(event) {
+        event.loaded;
+        event.total;
+    };
+    //xhr.responseType = 'json';
+
+    //!! Must await this //
+    xhr.send(payload);
+    return xhr;
+}
 
 // method should return a json object
 function scrapeUrlRequest(url) {
     var urlData = { "url": url };
     var payload = JSON.stringify(urlData);
 
+    // TODO: Remove lines 229-241
     var response;
     console.log("ScrapeUrl method called.");
     var xhr = new XMLHttpRequest();
@@ -443,6 +494,7 @@ var convertToPdf = function(e) {
 
     // Flushes researched cells and empties array
     var htmlData = JSON.stringify(arr);
+    console.log(htmlData);
     arr.ht = [];
     strResearchedCells = [];
     display_array();
