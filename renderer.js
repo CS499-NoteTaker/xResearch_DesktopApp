@@ -139,11 +139,50 @@ function getCitationAttributes() {
     return citation;
 }
 
-var GenerateCitation = function(e) {
+function setCitationAttributes(citation) {
+    // Here, get all textboxes attributes and add them to a json object accordingly.
+    var releasedDate = new Date(citation.releasedDate);
+    document.getElementById("datePublished").value = releasedDate.getDate();
+    document.getElementById("articleTitle").value = citation.pageTitle;
+
+    var authorNamesString = "";
+    if (citation.authorNames.length > 0) {
+        //Post fence algorithm to concatenate author names
+        authorNamesString = authorNamesString + citation.authorNames[0];
+        for (let index = 1; index < citation.authorNames.length; index++) {
+            const element = citation.authorNames[index];
+            authorNamesString = authorNamesString + "; " + element;
+        }
+    }
+
+    document.getElementById("authors").value = authorNamesString;
+    document.getElementById("publisher").value = citation.publisher;
+    document.getElementById("url").value = citation.url;
+    document.getElementById("websiteTitle").value = citation.websiteTitle;
+
+    console.log("setCitationAttr: websiteTitle = " + citation.websiteTitle);
+
+    console.log("setCitationAttr: citation = " + citation);
+    console.log("setCitationAttr: typeOf:citation = " + typeof citation);
+}
+
+var GenerateCitation = async function(e) {
     console.log("GenerateCitation method called.");
     // get the json object returned from method
-    // var citation = scrapeUrl();
-    scrapeUrl();
+    var url = document.getElementById("generateUrlCitation").value;
+    var xhrResponse = await scrapeUrlRequest(url);
+
+    xhrResponse.addEventListener("readystatechange", function(e) {
+        //4 means response is ready!
+        if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
+            //blob object to store the response from the server.
+            citation = JSON.parse(this.responseText);
+            console.log("Response from EventListener: " + JSON.stringify(citation));
+
+            setCitationAttributes(citation);
+
+        }
+    });
 
     // After getting the Json object from scraping url.
     // Populate every attribute/field of json object
@@ -160,8 +199,39 @@ var ViewCitation = function(e) {
 
 
 // method should return a json object
-function scrapeUrl(url) {
+function scrapeUrlRequest(url) {
+    var urlData = { "url": url };
+    var payload = JSON.stringify(urlData);
+
+    var response;
     console.log("ScrapeUrl method called.");
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    //used onreadystatechange (yes) ||    onload(no)
+    xhr.addEventListener("readystatechange", function(e) {
+        //4 means response is ready!
+        if (this.readyState === 4) {
+            //blob object to store the response from the server.
+            response = JSON.parse(this.responseText);
+            console.log("Response from EventListener: " + JSON.stringify(response));
+        }
+    });
+
+    xhr.open('POST', 'http://localhost:6968/document/scrapeurl', true); //open the request
+    xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
+    /**
+      Loading sign while progress
+    **/
+    xhr.onprogress = function(event) {
+        event.loaded;
+        event.total;
+    };
+    //xhr.responseType = 'json';
+
+    //!! Must await this //
+    xhr.send(payload);
+    return xhr;
+    //console.log("response after send(): " + JSON.stringify(response));
 
     //ajax.call(url);
     // Here should make ajax (https request) to the server
