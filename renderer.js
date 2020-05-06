@@ -151,6 +151,13 @@ var GenerateCitation = function(e) {
 
 }
 
+var ViewCitation = function(e) {
+    var citation = getCitationAttributes();
+
+    //make ajax call to for "citation" var
+    //wait for response to then print it out in the element.
+}
+
 
 // method should return a json object
 function scrapeUrl(url) {
