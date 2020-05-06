@@ -93,7 +93,12 @@
                 <input type="generateUrlCitation" id="generateUrlCitation" name="generateUrlCitation"><br><br>
                 <button id="generateCitationButton">Generate Citation</button>
                 <h2>Manually Enter Citation</h2>
-                <h3>To get started, please select item from the list you would like to cite.</h3>
+                <h3>To get started, please enter item number from the list you would like to cite.</h3>
+                <label for="itemNumber"> Item Number: </label>
+                <input type="itemNumber" id="itemNumber" name="itemNumber"><br><br>
+                <h3>Now fill information required for Citation</h3>
+
+
             </div>
 
             <!-- <form action="" method="get "> -->
@@ -101,8 +106,11 @@
                 <label for="articleTitle">Article Title: </label>
                 <input type="articleTitle" id="articleTitle" name="articleTitle"><br><br>
 
-                <label for="author">Author(s): </label>
-                <input type="author" id="author" name="author">**If more than one author, seperate authors by a semicolon character** <br><br>
+                <label for="websiteTitle">Website Title: </label>
+                <input type="websiteTitle" id="websiteTitle" name="websiteTitle"><br><br>
+
+                <label for="authors">Author(s): </label>
+                <input type="authors" id="authors" name="authors">**If more than one author, seperate authors by a semicolon character ";" ** <br><br>
 
                 <label for="publisher">Publisher / Sponsor: </label>
                 <input type="publisher" id="publisher" name="publisher"><br><br>
@@ -113,10 +121,9 @@
                 <label for="datePublished">Electronically Published:</label>
                 <input type="date" id="datePublished" name="datePublished"><br><br>
 
-                <label for="annotation">Annotation: </label>
-                <textarea name="annotation[text]" class="primary_annotation" rows="3"></textarea><br><br>
-
                 <button id="addCitationButton">Add Citation</button>
+                <button id="viewCitationButton">View Citation</button>
+
             </div>
         </div>
 
