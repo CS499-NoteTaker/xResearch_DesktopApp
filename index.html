@@ -1,161 +1,143 @@
 <!DOCTYPE html>
 <html>
-  <head>
-   <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" />-->
-   <meta charset="UTF-8">
-   <link rel="stylesheet" href="styles.css">
+
+<head>
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="style.css" />-->
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
     <!--
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
    -->
-   <title>ApplicationX</title>
+    <title>ApplicationX</title>
 
 
-   <!-- Include the Quill library -->
-   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-   <script src = "./jquery-3.4.1.min.js"></script>
+    <!-- Include the Quill library -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="./jquery-3.4.1.min.js"></script>
 
-   <!-- This is the script for deepai text summarization-->?
-   <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
-
-      <!--
-   <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
-
-   <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-   <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        -->
-
-<!-- add A SCROLL bar-->
-   <!-- Include stylesheet -->
-   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-   <!-- Theme included stylesheets -->
-   <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-   <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+    <!-- This is the script for deepai text summarization-->
+    <script src="https://cdnjs.deepai.org/deepai.min.js"></script>
 
 
-   </head>
-  <body>
+    <!-- add A SCROLL bar-->
+    <!-- Include stylesheet -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-    <h1>X-Research</h1>
+    <!-- Theme included stylesheets -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
 
-    <div id="toolbar"></div>
-    <div id="editor"></div>
 
-    <img src="loading.gif" id="loading-indicator" style="display:none" />
-    <!-- call from other script-->
-    <script src="./QuillTool.js"></script>
-    <ul class="tools">
-    <li onclick = "summarizeWords2();">Summarize </li>
-</ul>
+</head>
 
-    <p></p>
-    <p></p>
-    <p></p>
-    Summarize: <select id="percentlength">
-    <option value="20" selected>20%</option>
-    <option value="25" selected>25%</option>
-    <option value="30" selected>30%</option>
-    <option value="35" selected>35%</option>
-    <option value="40" selected>40%</option>
-    <option value="45" selected>45%</option>
-    <option value="50" selected>50%</option>
-    <option value="55" selected>55% </option>
-    <option value="60" selected>60%</option>
-    <option value="65" selected>65%</option>
-    <option value="70" selected>70%</option>
-    <option value="75" selected>75%</option>
-    <option value="80" selected>80%</option>
+<body style="background-color:antiquewhite;">
 
-</select>
-    <!-- Convert To HTML Button  -->
-    <p></p>
-    <button id="Summarize">Summarize</button>
-    <button id="KeepInArray">Add Content</button>
 
-    <!--
-    <script>
-      function convertToHtml() {
-        //Gets the Delta object
-        var delta = quill.getContents();
-        console.log( quill.getContents() );
+    <div class="row">
+        <div class="leftside">
+            <h1>X-Research</h1>
+            <div class="jquill">
+                <div id="toolbar"></div>
+                <div id="editor"></div>
+            </div>
+            <img src="loading.gif" id="loading-indicator" style="display:none" />
+            <!-- call from other script-->
+            <script src="./QuillTool.js"></script>
+            <ul class="tools">
+                <li onclick="summarizeWords2();">Summarize </li>
+            </ul>
 
-        var length = quill.getLength();
-        console.log( "Length: " + length);
+            <p></p>
+            <p></p>
+            <p></p>
+            Summarize: <select id="percentlength">
+        <option value="20" selected>20%</option>
+        <option value="25" selected>25%</option>
+        <option value="30" selected>30%</option>
+        <option value="35" selected>35%</option>
+        <option value="40" selected>40%</option>
+        <option value="45" selected>45%</option>
+        <option value="50" selected>50%</option>
+        <option value="55" selected>55% </option>
+        <option value="60" selected>60%</option>
+        <option value="65" selected>65%</option>
+        <option value="70" selected>70%</option>
+        <option value="75" selected>75%</option>
+        <option value="80" selected>80%</option>
 
-        var text = quill.getText(0, length);
-        console.log( text );
+      </select>
+            <!-- Convert To HTML Button  -->
+            <p></p>
+            <button id="KeepInArray">Add Content</button>
+            <button id="DeleteRc">Delete Selected</button>
 
-        var quillHtml = String(quill.root.innerHTML);
-        console.log( quillHtml );
+            <!-- Convert To PDF Button  -->
+            <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
+            <button id="ConvertToPdfButton">Convert To PDF</button>
+            <div id="add"></div>
+        </div>
 
-        document.getElementById("htmlTextBox").textContent = quillHtml;
-    }
-    </script>
-    -->
+        <div class="rightside">
+            <h2 style="padding: 6px;">List of Researched Cells</h2>
+            <ul id="ResearchedCellsList">
+            </ul>
+        </div>
+    </div>
 
-     <!-- Convert To PDF Button  -->
-     <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
-     <button id="ConvertToPdfButton">Convert To PDF</button>
-     <div id = "add"></div>
+    <div class="row">
+        <div class="leftside">
+            <div>
+                <h2>Citation Generator</h2>
+                <label for="generateUrlCitation">Enter URL: </label>
+                <input type="generateUrlCitation" id="generateUrlCitation" name="generateUrlCitation"><br><br>
+                <button id="generateCitationButton">Generate Citation</button>
+                <h2>Manually Enter Citation</h2>
+                <h3>To get started, please enter item number from the list you would like to cite.</h3>
+                <label for="itemNumber"> Item Number: </label>
+                <input type="itemNumber" id="itemNumber" name="itemNumber"><br><br>
+                <h3>Now fill information required for Citation</h3>
 
-     <!--
-    <script>
-      function convertToPdf() {
-        var htmlData = String(document.getElementById("htmlTextBox").textContent);
-        console.log(htmlData)
-        //adds html Data to json array object
-        var htmlDataJson =
-          {
-            "htmlDataArray":[htmlData]
-          };
 
-        console.log( htmlDataJson );
+            </div>
 
-        /*
-          function httpGetAsync(theUrl, callback) {
-              var xmlHttp = new XMLHttpRequest();
-              xmlHttp.onreadystatechange = function() {
-                  if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-                      callback(xmlHttp.responseText);
-              }
-              xmlHttp.open("GET", theUrl, true); // true for asynchronous
-              xmlHttp.send(null);
-          }
-        */
-      }
+            <!-- <form action="" method="get "> -->
+            <div style="padding-bottom: 50px;">
+                <label for="articleTitle">Article Title: </label>
+                <input type="articleTitle" id="articleTitle" name="articleTitle"><br><br>
 
-    </script>
+                <label for="websiteTitle">Website Title: </label>
+                <input type="websiteTitle" id="websiteTitle" name="websiteTitle"><br><br>
 
-    -->
+                <label for="authors">Author(s): </label>
+                <input type="authors" id="authors" name="authors">**If more than one author, seperate authors by a semicolon character ";" ** <br><br>
+
+                <label for="publisher">Publisher / Sponsor: </label>
+                <input type="publisher" id="publisher" name="publisher"><br><br>
+
+                <label for="url">URL: </label>
+                <input type="url" id="url" name="url"><br><br>
+
+                <label for="datePublished">Electronically Published:</label>
+                <input type="date" id="datePublished" name="datePublished"><br><br>
+
+                <button id="addCitationButton">Add Citation</button>
+                <button id="viewCitationButton">View Citation</button>
+                <label id="citationDisplay"></label>
+
+
+            </div>
+        </div>
+
+    </div>
 
 
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
-
-
-    <!--
-    <script type="text/javascript">
-      const target = document.querySelector('div.target');
-
-      target.addEventListener('paste', (event) => {
-        var clipboardData = event.clipboardData || window.clipboardData;
-        let text = clipboardData.getData('text/plain');
-        let htmlText = clipboardData.getData('text/html');
-        console.log(text);
-
-        const selection = window.getSelection();
-        if (!selection.rangeCount) return false;
-        selection.deleteFromDocument();
-        selection.getRangeAt(0).insertNode(document.createTextNode(htmlText));
-        event.preventDefault();
-      });
-      -->
+    <script src="./renderer.js "></script>
 
     </script>
     <!-- Load the JavaScript script for the client application-->
-    <!--<script src="C:/Users/joshmoran05/Documents/Joshua Moran/PLU/4-Senior Year/Fall/CS499-A/Electron Practice/electron-quick-start/index.js"> </script>-->
-  </body>
+    <!--<script src="C:/Users/joshmoran05/Documents/Joshua Moran/PLU/4-Senior Year/Fall/CS499-A/Electron Practice/electron-quick-start/index.js "> </script>-->
+</body>
 
-  </html>
+</html>

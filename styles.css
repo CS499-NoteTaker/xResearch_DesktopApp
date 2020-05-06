@@ -1,13 +1,13 @@
 ul.tools {
     display: none;
-
     list-style: none;
-    box-shadow: 0px 0px 4px rgba(0,0,0,.5);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, .5);
     border: solid 0.5px #000;
     position: absolute;
     background: #fff;
     padding: 0;
 }
+
 ul.tools li {
     height: 20px;
     font-size: 12px;
@@ -15,8 +15,64 @@ ul.tools li {
     padding: 2px 0px 0px 0px;
     cursor: pointer;
 }
+
+.jquill {
+    background-color: azure;
+}
+
 #loading-indicator {
-  position: absolute;
-  left: 200px;
-  top: 200px;
+    position: absolute;
+    left: 200px;
+    top: 200px;
+}
+
+.leftside {
+    width: 65%;
+    float: left;
+}
+
+.rightside {
+    width: 35%;
+    float: right;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#myInput {
+    background-image: url('/css/searchicon.png');
+    background-position: 10px 12px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 5px solid #ddd;
+    margin-bottom: 12px;
+}
+
+#ResearchedCellsList {
+    background-color: #f6f6f6;
+    border: 1px solid #ddd;
+    height: 350px;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 5px;
+    margin: 5px;
+}
+
+#ResearchedCellsList li a {
+    border: 1px solid #ddd;
+    margin: 3px;
+    /* Prevent double borders */
+    background-color: #ececec;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block
+}
+
+#ResearchedCellsList li a:hover:not(.header) {
+    background-color: rgb(213, 213, 213);
 }
