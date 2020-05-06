@@ -15,7 +15,8 @@ var rcIndexSelected = 0;
 
 var strResearchedCells = [];
 arr = {
-    "ht": []
+    "ht": [],
+    "citationObjects": []
 }
 var main = function() {
     //adding context menu on right click for summarizing
@@ -98,20 +99,38 @@ var AddCitation = function(e) {
     // citation = { author: getElementbyId("authorTextfield").getText(), etc. }
 
 
-    /*
+    // Dates are in format: UTC
+    var releasedDate = "01/25/2020";
+    var accessDate = "05/05/2020"; // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
+    var pageTitle = "Capstone";
+    var authorNames = ["JoshMoran", "San Nge"];
+    var publisher = "PLU";
+    var url = "www.plu.edu";
+    var websiteTitle = "Pacific Lutheran University";
+
+    index = 0;
+    citation = {
+        "releasedDate": releasedDate,
+        "accessDate": accessDate,
+        "pageTitle": pageTitle,
+        "authorNames": authorNames,
+        "url": url,
+        "websiteTitle": websiteTitle
+    };
+
     arr.citationObjects.push({
-        "index": index
+        "index": index,
         "citation": citation
     })
-    */
 
+    console.log(JSON.stringify(arr));
 }
 
 
 var GenerateCitation = function(e) {
     console.log("GenerateCitation method called.");
     // get the json object returned from method
-    // citation = scrapeUrl();
+    // var citation = scrapeUrl();
     scrapeUrl();
 
     // After getting the Json object from scraping url.
