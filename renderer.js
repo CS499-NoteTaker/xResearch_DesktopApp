@@ -103,9 +103,12 @@ var AddCitation = function() {
     console.log("AddCitation method called.");
 
     var index = document.getElementById("itemNumber").value;
+
     if (index < 1 || index > arr.ht.length) {
         document.getElementById("indexWarning").textContent = "The number you entered is not within range of listed items.";
     } else {
+        document.getElementById("indexWarning").textContent = "";
+
         var citation = getCitationAttributes();
 
         var citationObject = {
@@ -115,6 +118,7 @@ var AddCitation = function() {
 
         arr.citationObjects.push(citationObject);
         console.log(JSON.stringify(arr));
+
     }
 }
 
@@ -201,8 +205,12 @@ var GenerateCitation = async function(e) {
             //blob object to store the response from the server.
             var citation = JSON.parse(this.responseText);
             console.log("Response from EventListener: " + JSON.stringify(citation));
+            document.getElementById("urlWarning").textContent = "";
 
             setCitationAttributes(citation);
+
+        } else {
+            document.getElementById("urlWarning").textContent = "Could not generate citation from url.";
 
         }
     });
