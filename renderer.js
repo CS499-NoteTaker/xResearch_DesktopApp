@@ -68,10 +68,15 @@ var main = function() {
     DeleteRcButton.addEventListener("click", DeleteRc);
 
     let GenerateCitationButton = document.getElementById("generateCitationButton");
-    GenerateCitationButton.addEventListener("click", GenerateCitation)
+    GenerateCitationButton.addEventListener("click", GenerateCitation);
 
     let AddCitationButton = document.getElementById("addCitationButton");
-    AddCitationButton.addEventListener("click", AddCitation)
+    AddCitationButton.addEventListener("click", AddCitation);
+
+    let ViewCitationButton = document.getElementById("viewCitationButton");
+    ViewCitationButton.addEventListener("click", ViewCitation)
+
+
 
     //POSTING summary
     //   document.addEventListener("click",function(){
@@ -98,15 +103,34 @@ var AddCitation = function() {
     console.log("AddCitation method called.");
 
     var index = document.getElementById("itemNumber").value;
-    var citation = getCitationAttributes();
 
-    var citationObject = {
-        "index": index,
-        "citation": citation
-    };
+    if (index < 1 || index > arr.ht.length) {
+        document.getElementById("indexWarning").textContent = "The number you entered is not within range of listed items.";
+    } else {
+        document.getElementById("indexWarning").textContent = "";
 
-    arr.citationObjects.push(citationObject);
-    console.log(JSON.stringify(arr));
+        var citation = getCitationAttributes();
+
+        var citationObject = {
+            "index": index,
+            "citation": citation
+        };
+
+        arr.citationObjects.push(citationObject);
+        console.log(JSON.stringify(arr));
+
+        clearCitationAttributes();
+    }
+}
+
+function clearCitationAttributes() {
+    document.getElementById("datePublished").value = "";
+    document.getElementById("articleTitle").value = "";
+    document.getElementById("authors").value = "";
+    document.getElementById("publisher").value = "";
+    document.getElementById("url").value = "";
+    document.getElementById("websiteTitle").value = "";
+    document.getElementById("citationDisplay").innerHTML = "";
 }
 
 /**
@@ -117,17 +141,29 @@ var AddCitation = function() {
 function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     var inputDate = document.getElementById("datePublished").value;
-    var releasedDate = (new Date(inputDate)).toJSON();
+
+    var releaseDate = (new Date(inputDate)).toJSON();
+    if (releaseDate == null) {
+        releaseDate = "";
+    }
+
     var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
     var pageTitle = document.getElementById("articleTitle").value;
+
+
     var namesTextField = document.getElementById("authors").value;
-    var authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    var authorNames;
+    if (namesTextField.length == 0) {
+        authorNames = [];
+    } else {
+        authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    }
     var publisher = document.getElementById("publisher").value;
     var url = document.getElementById("url").value;
     var websiteTitle = document.getElementById("websiteTitle").value;
 
     var citation = {
-        "releasedDate": releasedDate,
+        "releaseDate": releaseDate,
         "accessDate": accessDate,
         "pageTitle": pageTitle,
         "authorNames": authorNames,
@@ -141,7 +177,7 @@ function getCitationAttributes() {
 
 function setCitationAttributes(citation) {
     // Here, get all textboxes attributes and add them to a json object accordingly.
-    var releasedDateString = formatDate(citation.releasedDate);
+    var releasedDateString = formatDate(citation.releaseDate);
     document.getElementById("datePublished").value = releasedDateString;
     document.getElementById("articleTitle").value = citation.pageTitle;
 
@@ -190,10 +226,14 @@ var GenerateCitation = async function(e) {
         //4 means response is ready!
         if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
             //blob object to store the response from the server.
-            citation = JSON.parse(this.responseText);
+            var citation = JSON.parse(this.responseText);
             console.log("Response from EventListener: " + JSON.stringify(citation));
+            document.getElementById("urlWarning").textContent = "";
 
             setCitationAttributes(citation);
+
+        } else {
+            document.getElementById("urlWarning").textContent = "Could not generate citation from url.";
 
         }
     });
@@ -207,16 +247,62 @@ var GenerateCitation = async function(e) {
 var ViewCitation = function(e) {
     var citation = getCitationAttributes();
 
+    var xhrResponse = formatCitationHttpRequest(citation);
+
+    var citationFormat;
+
+    xhrResponse.addEventListener("readystatechange", function(e) {
+        //4 means response is ready!
+        if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
+            //blob object to store the response from the server.
+            citationFormat = this.responseText;
+            displayFormattedCitation(citationFormat);
+        }
+    });
+
+
+    console.log("View Citation Method: ");
+    displayFormattedCitation(citationFormat);
     //make ajax call to for "citation" var
     //wait for response to then print it out in the element.
 }
 
+function displayFormattedCitation(formatCitation) {
+    //Setting View here.
+    //document.getElementById("citationDisplay").value = citationFormat;
+    console.log("displayFormattedCitation Method: ");
+
+    document.getElementById("citationDisplay").innerHTML = formatCitation;
+}
+
+function formatCitationHttpRequest(citation) {
+    var payload = JSON.stringify(citation);
+
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
+    xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
+    /**
+      Loading sign while progress
+    **/
+    xhr.onprogress = function(event) {
+        event.loaded;
+        event.total;
+    };
+    //xhr.responseType = 'json';
+
+    //!! Must await this //
+    xhr.send(payload);
+    return xhr;
+}
 
 // method should return a json object
 function scrapeUrlRequest(url) {
     var urlData = { "url": url };
     var payload = JSON.stringify(urlData);
 
+    // TODO: Remove lines 229-241
     var response;
     console.log("ScrapeUrl method called.");
     var xhr = new XMLHttpRequest();
@@ -369,6 +455,10 @@ var summarizeWords2 = function() {
 
 //will need to use part of this code to be able to convert to html for summarization
 var convertToHtml = function(e) {
+    if (quill.getLength() <= 1) {
+        return
+    }
+    console.log("quill.length: " + quill.getLength());
     //Gets the Delta object
     var delta = quill.getContents();
     var quillTextLength = quill.getLength();
@@ -415,7 +505,7 @@ function display_array() {
         for (var i = 0; i < strResearchedCells.length; i++) {
             var li = document.createElement('li');
             var a = document.createElement('a');
-            var text = strResearchedCells[i].substring(0, 20);
+            var text = "Item " + (i + 1) + ": " + strResearchedCells[i].substring(0, 20);
 
             a.appendChild(document.createTextNode(text));
             a.id = i;
@@ -427,7 +517,31 @@ function display_array() {
 }
 
 
+/**
+ * Method traverses through each citation
+ * 
+ * 
+ * 
+ */
+function appendFootNotes() {
+    var footNoteCounter = 1;
+    for (let i = 0; i < arr.citationObjects.length; i++) {
+        var citationObject = arr.citationObjects[i];
+        var index = citationObject.index - 1;
+        //append foot note at end of quill
+        var footNote = " [" + footNoteCounter + "]";
 
+        // Gets element from ht array, take it out, load into quill, make change, take it back out, and empty quill
+        var loadHtmlStr = arr.ht[index];
+        quill.root.innerHTML = loadHtmlStr;
+        console.log("loadedHtmlStr " + index + ": " + loadHtmlStr);
+        quill.root.innerText += footNote;
+        arr.ht[index] = quill.root.innerHTML;
+        quill.root.innerHTML = "";
+
+        footNoteCounter++;
+    }
+}
 
 
 
@@ -441,8 +555,12 @@ var convertToPdf = function(e) {
         arr.ht.push("");
     }
 
+    // Appends foot notes to Paragraphs.
+    appendFootNotes();
+
     // Flushes researched cells and empties array
     var htmlData = JSON.stringify(arr);
+    console.log(htmlData);
     arr.ht = [];
     strResearchedCells = [];
     display_array();

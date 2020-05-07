@@ -1,10 +1,21 @@
-toolbarOptions = ['bold', 'italic', 'underline', 'strike']
+toolbarOptions = [
+    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+    [{ 'font': [] }],
+
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+
+    ['blockquote'],
+    [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+    [{ 'align': [] }],
+
+];
 var container = document.getElementById('editor');
 var quill = new Quill(container, {
-  modules: {
-    toolbar: toolbarOptions
-  },
-  theme: 'snow'
+    modules: {
+        toolbar: toolbarOptions
+    },
+    theme: 'snow'
 });
 
 // quillTools ={
