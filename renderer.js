@@ -119,7 +119,17 @@ var AddCitation = function() {
         arr.citationObjects.push(citationObject);
         console.log(JSON.stringify(arr));
 
+        clearCitationAttributes();
     }
+}
+
+function clearCitationAttributes() {
+    document.getElementById("datePublished").value = "";
+    document.getElementById("articleTitle").value = "";
+    document.getElementById("authors").value = "";
+    document.getElementById("publisher").value = "";
+    document.getElementById("url").value = "";
+    document.getElementById("websiteTitle").value = "";
 }
 
 /**
@@ -130,11 +140,23 @@ var AddCitation = function() {
 function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     var inputDate = document.getElementById("datePublished").value;
+
     var releaseDate = (new Date(inputDate)).toJSON();
+    if (releaseDate == null) {
+        releaseDate = "";
+    }
+
     var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
     var pageTitle = document.getElementById("articleTitle").value;
+
+
     var namesTextField = document.getElementById("authors").value;
-    var authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    var authorNames;
+    if (namesTextField.length == 0) {
+        authorNames = [];
+    } else {
+        authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    }
     var publisher = document.getElementById("publisher").value;
     var url = document.getElementById("url").value;
     var websiteTitle = document.getElementById("websiteTitle").value;
@@ -432,6 +454,10 @@ var summarizeWords2 = function() {
 
 //will need to use part of this code to be able to convert to html for summarization
 var convertToHtml = function(e) {
+    if (quill.getLength() <= 1) {
+        return
+    }
+    console.log("quill.length: " + quill.getLength());
     //Gets the Delta object
     var delta = quill.getContents();
     var quillTextLength = quill.getLength();
