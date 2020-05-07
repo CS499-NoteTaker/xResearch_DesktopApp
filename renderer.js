@@ -103,15 +103,19 @@ var AddCitation = function() {
     console.log("AddCitation method called.");
 
     var index = document.getElementById("itemNumber").value;
-    var citation = getCitationAttributes();
+    if (index < 1 || index > arr.ht.length) {
+        document.getElementById("indexWarning").textContent = "The number you entered is not within range of listed items.";
+    } else {
+        var citation = getCitationAttributes();
 
-    var citationObject = {
-        "index": index,
-        "citation": citation
-    };
+        var citationObject = {
+            "index": index,
+            "citation": citation
+        };
 
-    arr.citationObjects.push(citationObject);
-    console.log(JSON.stringify(arr));
+        arr.citationObjects.push(citationObject);
+        console.log(JSON.stringify(arr));
+    }
 }
 
 /**
@@ -478,6 +482,12 @@ function display_array() {
 }
 
 
+/**
+ * Method traverses through each citation
+ * 
+ * 
+ * 
+ */
 function appendFootNotes() {
     var footNoteCounter = 1;
     for (let i = 0; i < arr.citationObjects.length; i++) {
