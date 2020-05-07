@@ -466,7 +466,7 @@ function display_array() {
         for (var i = 0; i < strResearchedCells.length; i++) {
             var li = document.createElement('li');
             var a = document.createElement('a');
-            var text = strResearchedCells[i].substring(0, 20);
+            var text = "Item " + (i + 1) + ": " + strResearchedCells[i].substring(0, 20);
 
             a.appendChild(document.createTextNode(text));
             a.id = i;
@@ -478,7 +478,25 @@ function display_array() {
 }
 
 
+function appendFootNotes() {
+    var footNoteCounter = 1;
+    for (let i = 0; i < arr.citationObjects.length; i++) {
+        var citationObject = arr.citationObjects[i];
+        var index = citationObject.index - 1;
+        //append foot note at end of quill
+        var footNote = " [" + footNoteCounter + "]";
 
+        // Gets element from ht array, take it out, load into quill, make change, take it back out, and empty quill
+        var loadHtmlStr = arr.ht[index];
+        quill.root.innerHTML = loadHtmlStr;
+        console.log("loadedHtmlStr " + index + ": " + loadHtmlStr);
+        quill.root.innerText += footNote;
+        arr.ht[index] = quill.root.innerHTML;
+        quill.root.innerHTML = "";
+
+        footNoteCounter++;
+    }
+}
 
 
 
@@ -491,6 +509,9 @@ var convertToPdf = function(e) {
     if (arr.ht.length === 0) {
         arr.ht.push("");
     }
+
+    // Appends foot notes to Paragraphs.
+    appendFootNotes();
 
     // Flushes researched cells and empties array
     var htmlData = JSON.stringify(arr);
