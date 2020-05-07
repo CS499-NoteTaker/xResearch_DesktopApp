@@ -130,6 +130,7 @@ function clearCitationAttributes() {
     document.getElementById("publisher").value = "";
     document.getElementById("url").value = "";
     document.getElementById("websiteTitle").value = "";
+    document.getElementById("citationDisplay").innerHTML = "";
 }
 
 /**
@@ -246,10 +247,10 @@ var GenerateCitation = async function(e) {
 var ViewCitation = function(e) {
     var citation = getCitationAttributes();
 
-    //var xhrResponse = formatCitationHttpRequest(citation);
+    var xhrResponse = formatCitationHttpRequest(citation);
 
     var citationFormat;
-    /*
+
     xhrResponse.addEventListener("readystatechange", function(e) {
         //4 means response is ready!
         if (xhrResponse.readyState == 4 && xhrResponse.status == 200) {
@@ -258,10 +259,10 @@ var ViewCitation = function(e) {
             displayFormattedCitation(citationFormat);
         }
     });
-    */
+
 
     console.log("View Citation Method: ");
-    displayFormattedCitation("NOTHING");
+    displayFormattedCitation(citationFormat);
     //make ajax call to for "citation" var
     //wait for response to then print it out in the element.
 }
