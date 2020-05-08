@@ -10,7 +10,10 @@ let mainWindow;
 app.on('ready', function (){
     // Create new window
 
-    mainWindow = new BrowserWindow({});
+    mainWindow = new BrowserWindow({
+      minWidth:700,
+      minHeight:600
+    });
 
     // Load html into window
     mainWindow.loadURL(url.format({
