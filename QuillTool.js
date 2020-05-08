@@ -8,6 +8,7 @@ toolbarOptions = [
     ['blockquote'],
     [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
     [{ 'align': [] }],
+    ['clean']
 
 ];
 var container = document.getElementById('editor');

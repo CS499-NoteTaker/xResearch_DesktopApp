@@ -143,6 +143,7 @@ function getCitationAttributes() {
     var inputDate = document.getElementById("datePublished").value;
 
     var releaseDate = (new Date(inputDate)).toJSON();
+
     if (releaseDate == null) {
         releaseDate = "";
     }
@@ -281,7 +282,7 @@ function formatCitationHttpRequest(citation) {
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
+    xhr.open('POST', 'http://104.196.250.138:6968/document/formatCitation', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -317,7 +318,7 @@ function scrapeUrlRequest(url) {
         }
     });
 
-    xhr.open('POST', 'http://localhost:6968/document/scrapeurl', true); //open the request
+    xhr.open('POST', 'http://104.196.250.138:6968/document/scrapeurl', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -621,7 +622,7 @@ var convertToPdf = function(e) {
         }
     });
 
-    xhr.open('POST', 'http://localhost:6968/document/convert', true); //open the request
+    xhr.open('POST', 'http://104.196.250.138:6968/document/convert', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress

@@ -36,13 +36,13 @@ button:hover{
 #editor{
   height :150px;
   width : 100%;
-  repeat:no-repeat;
+
     background-color: #ffffff;
     background-image: none;
     background-size: 25px 25px;
     background-position:center;
     background-repeat: no-repeat;
-    overflow :scroll;
+
 }
 
 ul.tools li {
@@ -55,6 +55,8 @@ ul.tools li {
 
 .jquill {
     background-color: azure;
+
+
 }
 
 
@@ -100,6 +102,7 @@ ul.tools li {
 }
 #editor{
   height:250px;
+  overflow:auto;
 }
 hr{
   border:1px solid black;
