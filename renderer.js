@@ -343,22 +343,30 @@ function scrapeUrlRequest(url) {
 
 
 var DeleteRc = function(e) {
-  var addContentButton = document.getElementById("KeepInArray");
-  if(addContentButton.innerHTML=="Done Editing"){
-    addContentButton.innerHTML="Add Content";
-  }
+  if(rcSelected){
+    var addContentButton = document.getElementById("KeepInArray");
+    if(addContentButton.innerHTML=="Done Editing"){
+      addContentButton.style.background="white";
+      addContentButton.innerHTML="Add Content";
+    }
 
-    arr.ht.splice(rcIndexSelected, 1);
-    strResearchedCells.splice(rcIndexSelected, 1);
-    rcSelected = false;
-    quill.root.innerHTML = "";
-    display_array();
+      arr.ht.splice(rcIndexSelected, 1);
+      strResearchedCells.splice(rcIndexSelected, 1);
+      rcSelected = false;
+      quill.root.innerHTML = "";
+      display_array();
+  }
 }
 
 var LoadResearchedCell = function(e) {
     var rcIndex = parseInt(e.target.id);
 
     if (rcSelected && rcIndexSelected == rcIndex) {
+        var addContentButton = document.getElementById("KeepInArray");
+        addContentButton.style.background="white";
+        addContentButton.innerHTML="Add Content";
+
+
         rcSelected = false;
         quill.root.innerHTML = "";
     } else {
@@ -366,6 +374,7 @@ var LoadResearchedCell = function(e) {
         //put the button change here........
         var addContentButton = document.getElementById("KeepInArray");
         addContentButton.innerHTML="Done Editing";
+        addContentButton.style.background="lightgreen";
         if (e.target && e.target.matches("a")) {
             rcSelected = true;
             rcIndexSelected = rcIndex;
@@ -474,6 +483,7 @@ var summarizeWords2 = function() {
 var convertToHtml = function(e) {
   var addContentButton = document.getElementById("KeepInArray");
   if(addContentButton.innerHTML=="Done Editing"){
+    addContentButton.style.background="white";
     addContentButton.innerHTML="Add Content";
   }
     if (quill.getLength() <= 1) {
@@ -551,7 +561,7 @@ function appendFootNotes() {
         var index = citationObject.index - 1;
         //append foot note at end of quill
 
-        var footNote = " [[" + footNoteCounter + "]]";
+        var footNote = " [" + footNoteCounter + "]";
 
         // Gets element from ht array, take it out, load into quill, make change, take it back out, and empty quill
         var loadHtmlStr = arr.ht[index];
