@@ -97,7 +97,7 @@ var main = function() {
  * Is a method when "Add Citation" button is clicked. Gets the appropriate
  * json Citation object and maps the object with some index that the user
  * chooses to map citation to paragraph/researched cell. Then pushes that
- * into arr (the research paper).
+ * into arr (the research paper). 
  */
 var AddCitation = function() {
     console.log("AddCitation method called.");
@@ -142,10 +142,9 @@ function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     var inputDate = document.getElementById("datePublished").value;
 
-    var releaseDate = (new Date(inputDate)).toJSON();
-
-    if (releaseDate == null) {
-        releaseDate = "";
+    var releasedDate = (new Date(inputDate)).toJSON();
+    if (releasedDate == null) {
+        releasedDate = "";
     }
 
     var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -164,7 +163,7 @@ function getCitationAttributes() {
     var websiteTitle = document.getElementById("websiteTitle").value;
 
     var citation = {
-        "releaseDate": releaseDate,
+        "releasedDate": releasedDate,
         "accessDate": accessDate,
         "pageTitle": pageTitle,
         "authorNames": authorNames,
@@ -178,7 +177,8 @@ function getCitationAttributes() {
 
 function setCitationAttributes(citation) {
     // Here, get all textboxes attributes and add them to a json object accordingly.
-    var releasedDateString = formatDate(citation.releaseDate);
+    var releasedDateString = formatDate(citation.releasedDate);
+    console.log("releasedDate: " + citation.releasedDate);
     document.getElementById("datePublished").value = releasedDateString;
     document.getElementById("articleTitle").value = citation.pageTitle;
 
@@ -282,7 +282,7 @@ function formatCitationHttpRequest(citation) {
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.open('POST', 'http://104.196.250.138:6968/document/formatCitation', true); //open the request
+    xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -318,7 +318,7 @@ function scrapeUrlRequest(url) {
         }
     });
 
-    xhr.open('POST', 'http://104.196.250.138:6968/document/scrapeurl', true); //open the request
+    xhr.open('POST', 'http://localhost:6968/document/scrapeurl', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -344,38 +344,21 @@ function scrapeUrlRequest(url) {
 
 
 var DeleteRc = function(e) {
-  if(rcSelected){
-    var addContentButton = document.getElementById("KeepInArray");
-    if(addContentButton.innerHTML=="Done Editing"){
-      addContentButton.style.background="white";
-      addContentButton.innerHTML="Add Content";
-    }
-
-      arr.ht.splice(rcIndexSelected, 1);
-      strResearchedCells.splice(rcIndexSelected, 1);
-      rcSelected = false;
-      quill.root.innerHTML = "";
-      display_array();
-  }
+    arr.ht.splice(rcIndexSelected, 1);
+    strResearchedCells.splice(rcIndexSelected, 1);
+    rcSelected = false;
+    quill.root.innerHTML = "";
+    display_array();
 }
 
 var LoadResearchedCell = function(e) {
     var rcIndex = parseInt(e.target.id);
 
     if (rcSelected && rcIndexSelected == rcIndex) {
-        var addContentButton = document.getElementById("KeepInArray");
-        addContentButton.style.background="white";
-        addContentButton.innerHTML="Add Content";
-
-
         rcSelected = false;
         quill.root.innerHTML = "";
     } else {
         console.log("LoadResearchedCell function clicked");
-        //put the button change here........
-        var addContentButton = document.getElementById("KeepInArray");
-        addContentButton.innerHTML="Done Editing";
-        addContentButton.style.background="lightgreen";
         if (e.target && e.target.matches("a")) {
             rcSelected = true;
             rcIndexSelected = rcIndex;
@@ -423,51 +406,42 @@ var summarizeWords = function() {
     //can selected text to summarize
 
 var summarizeWords2 = function() {
-  document.getElementById("add").innerHTML="";
     var data = "";
-    var quillcssElement = document.getElementById("editor")
-    quillcssElement.style.backgroundImage = 'url("http://loadinggif.com/images/image-selection/3.gif")';
     selection = quill.getSelection();
     console.log(selection);
     var selectedContent = quill.getContents(selection.index, selection.length);
     var tempContainer = document.createElement('div')
     var tempQuill = new Quill(tempContainer);
     tempQuill.setContents(selectedContent);
-    var tempText = tempQuill.getText();
     console.log("SetCont is " + tempQuill.getText());
-    tempText = tempText.replace(/[^0-9a-z.?,A-Z()[] ]/gi, '')
-    console.log("Here is temp text:"+tempText)
-    data = "key=d7a5dbe89179dd6640ddd0250c6512eb&sentence=" + tempText;
+    data = "key=39707fcc6822fef005f8d53c236f3df4&sentence=" + tempQuill.getText();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-          quillcssElement.style.backgroundImage = "none";
             quill.enable(true); //set quill back to edit
             quill.focus(); //back to focus
             document.getElementById("add").innerHTML = "Request Passed!";
             console.log("Done!");
-
+            $('#loading-indicator').hide();
 
 
             quill.deleteText(selection.index, selection.length);
             quill.insertText(selection.index, this.responseText);
         } else if (this.readyState == 4 && this.status != 200) {
-
+            $('#loading-indicator').hide();
             quill.enable(true);
             quill.focus();
-            quillcssElement.style.backgroundImage = "none";
             document.getElementById("add").innerHTML = "Request failed!";
         }
 
     }
-    //quill.root.blur(); //take out focus
     xhttp.open("POST", "http://eazymind.herokuapp.com/arabic_sum/eazysum", true);
-    xhttp.setRequestHeader("Cache-Control", "no-cache");
+    xhttp.setRequestHeader("Cache-Control", "no-cache, no-store, must-revalidate");
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send(data);
     quill.enable(false); //set quill to be uneditable
-
-
+    quill.blur(); //take out focus
+    $('#loading-indicator').show(); //loading indicator
 
 
 
@@ -482,11 +456,6 @@ var summarizeWords2 = function() {
 
 //will need to use part of this code to be able to convert to html for summarization
 var convertToHtml = function(e) {
-  var addContentButton = document.getElementById("KeepInArray");
-  if(addContentButton.innerHTML=="Done Editing"){
-    addContentButton.style.background="white";
-    addContentButton.innerHTML="Add Content";
-  }
     if (quill.getLength() <= 1) {
         return
     }
@@ -522,8 +491,8 @@ var convertToHtml = function(e) {
     quill.deleteText(0, quill.getLength());
 };
 
-// When display array method is called, it will concatinate
-// a new html to add to the list and be able to display researched
+// When display array method is called, it will concatinate 
+// a new html to add to the list and be able to display researched 
 // cells that has been added to the list.
 function display_array() {
     console.log(strResearchedCells);
@@ -537,7 +506,7 @@ function display_array() {
         for (var i = 0; i < strResearchedCells.length; i++) {
             var li = document.createElement('li');
             var a = document.createElement('a');
-            var text = ""+(i + 1) + ".\t" + strResearchedCells[i].substring(0, strResearchedCells[i].length);
+            var text = "Item " + (i + 1) + ": " + strResearchedCells[i].substring(0, 20);
 
             a.appendChild(document.createTextNode(text));
             a.id = i;
@@ -551,9 +520,9 @@ function display_array() {
 
 /**
  * Method traverses through each citation
- *
- *
- *
+ * 
+ * 
+ * 
  */
 function appendFootNotes() {
     var footNoteCounter = 1;
@@ -561,7 +530,6 @@ function appendFootNotes() {
         var citationObject = arr.citationObjects[i];
         var index = citationObject.index - 1;
         //append foot note at end of quill
-
         var footNote = " [" + footNoteCounter + "]";
 
         // Gets element from ht array, take it out, load into quill, make change, take it back out, and empty quill
@@ -618,11 +586,10 @@ var convertToPdf = function(e) {
             //programmatically force click the url
             a.click();
             window.URL.revokeObjectURL(url)
-            arr.citationObjects = [];
         }
     });
 
-    xhr.open('POST', 'http://104.196.250.138:6968/document/convert', true); //open the request
+    xhr.open('POST', 'http://localhost:6968/document/convert', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -638,7 +605,7 @@ var convertToPdf = function(e) {
     /*
 function display_array()
 {
-   var e = "<li/>";
+   var e = "<li/>";   
    for (var i=0; y<arr.ht.length; i++) {
      e += "Element " + i + " = " + array[i].substring(0, 10) + "<br/>";
    }
