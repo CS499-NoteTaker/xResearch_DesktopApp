@@ -109,7 +109,7 @@ var AddCitation = function() {
     } else {
         document.getElementById("indexWarning").textContent = "";
 
-        var citation = getCitationAttributes();
+        var citation = getCitationAttributesWithD();
 
         var citationObject = {
             "index": index,
@@ -158,12 +158,54 @@ function getCitationAttributes() {
     } else {
         authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
     }
+
+
     var publisher = document.getElementById("publisher").value;
     var url = document.getElementById("url").value;
     var websiteTitle = document.getElementById("websiteTitle").value;
 
     var citation = {
         "releasedDate": releasedDate,
+        "accessDate": accessDate,
+        "pageTitle": pageTitle,
+        "authorNames": authorNames,
+        "publisher": publisher,
+        "url": url,
+        "websiteTitle": websiteTitle
+    };
+
+    return citation;
+}
+
+function getCitationAttributesWithD() {
+    // Here, get all textboxes attributes and add them to a json object accordingly.
+    var inputDate = document.getElementById("datePublished").value;
+
+    var releasedDate = (new Date(inputDate)).toJSON();
+    if (releasedDate == null) {
+        releasedDate = "";
+    }
+
+    var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
+    var pageTitle = document.getElementById("articleTitle").value;
+
+
+    var namesTextField = document.getElementById("authors").value;
+    var authorNames;
+    if (namesTextField.length == 0) {
+        authorNames = [];
+    } else {
+        authorNames = namesTextField.split(";"); // Splits author names with delimeter of ';'
+    }
+    for(var i=0;i<authorNames.length;i++){
+      authorNames[i] = authorNames[i].trim();
+    }
+    var publisher = document.getElementById("publisher").value;
+    var url = document.getElementById("url").value;
+    var websiteTitle = document.getElementById("websiteTitle").value;
+
+    var citation = {
+        "releaseDate": releasedDate,
         "accessDate": accessDate,
         "pageTitle": pageTitle,
         "authorNames": authorNames,
@@ -246,7 +288,8 @@ var GenerateCitation = async function(e) {
 }
 
 var ViewCitation = function(e) {
-    var citation = getCitationAttributes();
+    var citation = getCitationAttributesWithD();
+    console.log("preview citation request:"+JSON.stringify(citation));
 
     var xhrResponse = formatCitationHttpRequest(citation);
 
@@ -303,7 +346,7 @@ function formatCitationHttpRequest(citation) {
 function scrapeUrlRequest(url) {
     var urlData = { "url": url };
     var payload = JSON.stringify(urlData);
-
+    console.log("payload:"+payload)
     // TODO: Remove lines 229-241
     var response;
     console.log("ScrapeUrl method called.");
@@ -595,7 +638,7 @@ var convertToPdf = function(e) {
     strResearchedCells = [];
     display_array();
 
-    console.log(htmlData)
+    console.log("htmlData:"+htmlData)
         //adds html Data to json array object
         //using xhr
     var xhr = new XMLHttpRequest();
