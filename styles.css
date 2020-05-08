@@ -6,6 +6,43 @@ ul.tools {
     position: absolute;
     background: #fff;
     padding: 0;
+
+}
+.ql-toolbar{
+  width:100%;
+
+}
+.ql-editor{
+    min-height:1000px;
+}
+.Center {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -50px;
+}
+
+#researchcell-header{
+  position: relative;
+  left: 40%;
+  margin-left: -30px;
+}
+
+button:hover{
+  background-color: rgb(255, 242, 207);
+}
+
+#editor{
+  height :150px;
+  width : 100%;
+
+    background-color: #ffffff;
+    background-image: none;
+    background-size: 25px 25px;
+    background-position:center;
+    background-repeat: no-repeat;
+
 }
 
 ul.tools li {
@@ -18,22 +55,24 @@ ul.tools li {
 
 .jquill {
     background-color: azure;
+
+
 }
 
-#loading-indicator {
-    position: absolute;
-    left: 200px;
-    top: 200px;
-}
 
 .leftside {
-    width: 65%;
+  margin:0 0 0px 20px;
+    width: 45%;
     float: left;
+    margin-right:0;
+    padding-right:0;
 }
 
 .rightside {
-    width: 35%;
+    width: 50%;
     float: right;
+    margin-right:2%;
+    margin-left:0;
 }
 
 * {
@@ -54,21 +93,31 @@ ul.tools li {
 #ResearchedCellsList {
     background-color: #f6f6f6;
     border: 1px solid #ddd;
-    height: 350px;
+    height: 900px;
     overflow-y: auto;
     list-style-type: none;
     padding: 5px;
     margin: 5px;
+
 }
+#editor{
+  height:250px;
+  overflow:auto;
+}
+hr{
+  border:1px solid black;
+  margin:0;
+}
+
 
 #ResearchedCellsList li a {
     border: 1px solid #ddd;
     margin: 3px;
     /* Prevent double borders */
     background-color: #ececec;
-    padding: 12px;
+    padding: 0px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     color: black;
     display: block
 }

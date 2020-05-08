@@ -41,12 +41,13 @@
                 <div id="toolbar"></div>
                 <div id="editor"></div>
             </div>
-            <img src="loading.gif" id="loading-indicator" style="display:none" />
+            <div class = "quill-container" id="textbox-area">
             <!-- call from other script-->
-            <script src="./QuillTool.js"></script>
+            <script id = "quillbox" src="./QuillTool.js"></script>
             <ul class="tools">
                 <li onclick="summarizeWords2();">Summarize </li>
             </ul>
+
 
             <p></p>
             <p></p>
@@ -70,66 +71,72 @@
             <!-- Convert To HTML Button  -->
             <p></p>
             <button id="KeepInArray">Add Content</button>
-            <button id="DeleteRc">Delete Selected</button>
-
+            <button style="margin-left:2%;margin-top:0;" id="DeleteRc">Delete Selected</button>
+            <br>
+            <br>
+            <hr id="line">
+          </div>
             <!-- Convert To PDF Button  -->
             <!-- WE DON'T WANNA SHOW THIS BUTTON UNTIL THE USER HAS PUSHED SOME CONTENT TO ARRAY VERY IMPORTNAT-->
-            <button id="ConvertToPdfButton">Convert To PDF</button>
-            <div id="add"></div>
+
         </div>
 
-        <div class="rightside">
-            <h2 style="padding: 6px;">List of Researched Cells</h2>
+        <div class="rightside" id = "researchcell-area">
+            <h2 id = "researchcell-header"style="padding: 6px;">Researched Items</h2>
             <ul id="ResearchedCellsList">
             </ul>
+            <button class = "Center" style="margin-top:15px;" id="ConvertToPdfButton">Convert To PDF</button>
+            <div id="add"></div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" id="citation-area">
         <div class="leftside">
             <div>
-                <h2>Citation Generator</h2>
-                <label for="generateUrlCitation">Enter URL: </label>
-                <input type="generateUrlCitation" id="generateUrlCitation" name="generateUrlCitation">
+                <h2 style="padding-top:0;margin-top:0;border-top:0;">Citation Generator</h2>
+                <label for="generateUrlCitation" >Enter URL: </label>
+                <input type="generateUrlCitation" id="generateUrlCitation" name="generateUrlCitation" size="45wh">
                 <label id="urlWarning" style="color: red;"></label><br><br>
                 <button id="generateCitationButton">Generate Citation</button>
+              </div>
 
-                <h2>Manually Enter Citation</h2>
+            <div id = "tohide-content">
+                <h2 style="padding-top:5px;margin-top:0;border-top:0;">Manually Enter Citation</h2>
                 <h3>To get started, please enter item number from the list you would like to cite.</h3>
                 <label for="itemNumber"> Item Number: </label>
                 <input type="itemNumber" id="itemNumber" name="itemNumber"><br><br>
                 <label id="indexWarning" style="color: red;"></label>
 
-                <h3>Now fill information required for Citation</h3>
+                <h3 style="padding-top:0;margin-top:0;border-top:0;">Now fill information required for Citation</h3>
 
 
-            </div>
+
 
             <!-- <form action="" method="get "> -->
             <div class="CitationForm" style="padding-bottom: 50px;">
                 <label for="articleTitle">Article Title: </label>
-                <input type="articleTitle" id="articleTitle" name="articleTitle"><br><br>
+                <input type="articleTitle" id="articleTitle" name="articleTitle" size="45wh"><br><br>
 
                 <label for="websiteTitle">Website Title: </label>
-                <input type="websiteTitle" id="websiteTitle" name="websiteTitle"><br><br>
+                <input type="websiteTitle" id="websiteTitle" name="websiteTitle" size="45wh"><br><br>
 
                 <label for="authors">Author(s): </label>
-                <input type="authors" id="authors" name="authors">**If more than one author, seperate authors by a semicolon character ";" ** <br><br>
+                <input type="authors" id="authors" name="authors" size="45wh"><br>**If more than one author, seperate authors by a semicolon character ";" ** <br><br>
 
                 <label for="publisher">Publisher / Sponsor: </label>
-                <input type="publisher" id="publisher" name="publisher"><br><br>
+                <input type="publisher" id="publisher" name="publisher" size="45wh"><br><br>
 
                 <label for="url">URL: </label>
-                <input type="url" id="url" name="url"><br><br>
+                <input type="url" id="url" name="url" size="45wh"><br><br>
 
                 <label for="datePublished">Electronically Published:</label>
-                <input type="date" id="datePublished" name="datePublished"><br><br>
+                <input style="margin-bottom:0;" type="date" id="datePublished" name="datePublished"><br><br>
 
                 <button id="addCitationButton">Add Citation</button>
-                <button id="viewCitationButton">Preview Citation</button><br><br>
+                <button style="margin-left:2%;padding-top:0;margin-top:0px;border-top:0;" id="viewCitationButton">Preview Citation</button><br><br>
                 <label style="background-color:floralwhite;" id="citationDisplay"></label>
 
-
+                <div>
             </div>
         </div>
 

@@ -8,6 +8,7 @@ toolbarOptions = [
     ['blockquote'],
     [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
     [{ 'align': [] }],
+    ['clean']
 
 ];
 var container = document.getElementById('editor');
@@ -15,6 +16,7 @@ var quill = new Quill(container, {
     modules: {
         toolbar: toolbarOptions
     },
+    scrollingContainer: "#editor",
     theme: 'snow'
 });
 

@@ -142,9 +142,9 @@ function getCitationAttributes() {
     // Here, get all textboxes attributes and add them to a json object accordingly.
     var inputDate = document.getElementById("datePublished").value;
 
-    var releaseDate = (new Date(inputDate)).toJSON();
-    if (releaseDate == null) {
-        releaseDate = "";
+    var releasedDate = (new Date(inputDate)).toJSON();
+    if (releasedDate == null) {
+        releasedDate = "";
     }
 
     var accessDate = (new Date()).toJSON(); // just get today's date. "yyyy-MM-dd'T'HH:mm:ssZ"
@@ -163,7 +163,7 @@ function getCitationAttributes() {
     var websiteTitle = document.getElementById("websiteTitle").value;
 
     var citation = {
-        "releaseDate": releaseDate,
+        "releasedDate": releasedDate,
         "accessDate": accessDate,
         "pageTitle": pageTitle,
         "authorNames": authorNames,
@@ -177,7 +177,8 @@ function getCitationAttributes() {
 
 function setCitationAttributes(citation) {
     // Here, get all textboxes attributes and add them to a json object accordingly.
-    var releasedDateString = formatDate(citation.releaseDate);
+    var releasedDateString = formatDate(citation.releasedDate);
+    console.log("releasedDate: " + citation.releasedDate);
     document.getElementById("datePublished").value = releasedDateString;
     document.getElementById("articleTitle").value = citation.pageTitle;
 
