@@ -97,7 +97,7 @@ var main = function() {
  * Is a method when "Add Citation" button is clicked. Gets the appropriate
  * json Citation object and maps the object with some index that the user
  * chooses to map citation to paragraph/researched cell. Then pushes that
- * into arr (the research paper). 
+ * into arr (the research paper).
  */
 var AddCitation = function() {
     console.log("AddCitation method called.");
@@ -283,7 +283,7 @@ function formatCitationHttpRequest(citation) {
     xhr.withCredentials = true;
 
     xhr.open('POST', 'http://104.196.250.138:6968/document/formatCitation', true); //open the request
-    xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
+    //xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -314,7 +314,7 @@ function scrapeUrlRequest(url) {
         //4 means response is ready!
         if (this.readyState === 4) {
             //blob object to store the response from the server.
-            response = JSON.parse(this.responseText);
+            response = this.responseText;
             console.log("Response from EventListener: " + JSON.stringify(response));
         }
     });
@@ -519,8 +519,8 @@ var convertToHtml = function(e) {
     quill.deleteText(0, quill.getLength());
 };
 
-// When display array method is called, it will concatinate 
-// a new html to add to the list and be able to display researched 
+// When display array method is called, it will concatinate
+// a new html to add to the list and be able to display researched
 // cells that has been added to the list.
 function display_array() {
     console.log(strResearchedCells);
@@ -548,9 +548,9 @@ function display_array() {
 
 /**
  * Method traverses through each citation
- * 
- * 
- * 
+ *
+ *
+ *
  */
 function appendFootNotes() {
     var footNoteCounter = 1;
@@ -635,7 +635,7 @@ var convertToPdf = function(e) {
     /*
 function display_array()
 {
-   var e = "<li/>";   
+   var e = "<li/>";
    for (var i=0; y<arr.ht.length; i++) {
      e += "Element " + i + " = " + array[i].substring(0, 10) + "<br/>";
    }
