@@ -12,7 +12,8 @@ app.on('ready', function (){
 
     mainWindow = new BrowserWindow({
       minWidth:700,
-      minHeight:600
+      minHeight:600,
+      icon:'./x.ico'
     });
 
     // Load html into window

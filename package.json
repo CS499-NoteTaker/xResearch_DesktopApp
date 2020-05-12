@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/CS499-NoteTaker/xResearch_DesktopApp.git"
   },
+  
   "keywords": [
     "Electron",
     "quick",
