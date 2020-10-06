@@ -24,7 +24,7 @@
     "url": "https://github.com/CS499-NoteTaker/xResearch_DesktopApp/issues"
   },
   "devDependencies": {
-    "electron": "^8.0.1"
+    "electron": "^8.5.1"
   },
   "dependencies": {
     "blazer": "^1.0.0",
