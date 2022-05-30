@@ -9,7 +9,7 @@ var selection;
 var pageX;
 var pageY;
 
-
+const domain = "http://0.0.0.0:6968";
 var rcSelected = false;
 var rcIndexSelected = 0;
 
@@ -325,7 +325,7 @@ function formatCitationHttpRequest(citation) {
     var xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
-    xhr.open('POST', 'http://104.196.250.138:6968/document/formatCitation', true); //open the request
+    xhr.open('POST', domain + '/document/formatCitation', true); //open the request
     //xhr.open('POST', 'http://localhost:6968/document/formatCitation', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
@@ -362,7 +362,7 @@ function scrapeUrlRequest(url) {
         }
     });
 
-    xhr.open('POST', 'http://104.196.250.138:6968/document/scrapeurl', true); //open the request
+    xhr.open('POST',  domain + '/document/scrapeurl', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
@@ -662,7 +662,7 @@ var convertToPdf = function(e) {
         }
     });
 
-    xhr.open('POST', 'http://104.196.250.138:6968/document/convert', true); //open the request
+    xhr.open('POST', domain + '/document/convert', true); //open the request
     xhr.setRequestHeader('Content-Type', 'application/json'); //request body type
     /**
       Loading sign while progress
